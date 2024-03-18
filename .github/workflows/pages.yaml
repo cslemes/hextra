@@ -28,6 +28,28 @@ defaults:
 
 jobs:
   # Build job
+  copy_folder:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout this repository
+      uses: actions/checkout@v2
+
+    - name: Download specific folder from other repository
+      uses: actions/download-artifact@v2
+      with:
+        name: AprendendoAWS
+        repository: cslemes/obsidian-vault1
+        path: .
+
+    - name: Commit changes
+      run: |
+        git config --local user.email "actions@github.com"
+        git config --local user.name "GitHub Actions"
+        git add /content/AprendendoAWS
+        git commit -m "Copiando pasta atualizada"
+        git push
+
   build:
     runs-on: ubuntu-latest
     env:
