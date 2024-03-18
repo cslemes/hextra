@@ -39,8 +39,8 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: AprendendoAWS
-        repository: obsidian-vault1
-        path: .
+        repository: cslemes/obsidian-vault1
+        path: ./AprendendoAWS
 
     - name: Commit changes
       run: |
