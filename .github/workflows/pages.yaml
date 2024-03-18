@@ -37,8 +37,7 @@ jobs:
 
     - name: Download specific folder from other repository
       uses: actions/download-artifact@v2
-      with:
-        name: AprendendoAWS
+      with:        
         repository: cslemes/obsidian-vault1
         path: ./AprendendoAWS
 
