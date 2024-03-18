@@ -28,26 +28,24 @@ defaults:
 
 jobs:
   # Build job
-
-  copy_folder:
+  
+  paste-folder:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout this repository
-      uses: actions/checkout@v2
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: AprendendoAWS
 
-    - name: Download specific folder from other repository
-      uses: actions/download-artifact@v2
-      with:
-        github-token: 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
-        repository: cslemes/obsidian-vault1
-        path: AprendendoAWS
-
+      - name: Copy folder to target location
+        run: |
+          cp -r ${{ github.workspace }}/AprendendoAWS content # Adjust the destination path
 
 
 
 
   build:
+    needs: paste-folder
     runs-on: ubuntu-latest
     env:
       HUGO_VERSION: 0.121.2
