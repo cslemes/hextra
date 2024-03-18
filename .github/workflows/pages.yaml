@@ -42,12 +42,11 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
-          name: folder-to-copy
+          name: AprendendoAWS
 
       - name: Copy folder to target location
         run: |
-          cp -r ${{ github.workspace }}/folder-to-copy content # Adjust the destination path
-
+          cp -r ${{ github.workspace }}/AprendendoAWS content/ 
 
 
 
