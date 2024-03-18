@@ -42,7 +42,7 @@ jobs:
         path: ./AprendendoAWS
 
     - name: Copy specific folder to destination
-      run: cp -r AprendendoAWS /content
+      run: cp -r ./AprendendoAWS /content
     
 
     - name: Commit changes
