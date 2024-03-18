@@ -36,22 +36,7 @@ defaults:
 jobs:
   # Build job
   
-  paste-folder:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: AprendendoAWS
-
-      - name: Copy folder to target location
-        run: |
-          cp -r ${{ github.workspace }}/AprendendoAWS content/ 
-
-
-
   build:
-    needs: paste-folder
     runs-on: ubuntu-latest
     env:
       HUGO_VERSION: 0.121.2
