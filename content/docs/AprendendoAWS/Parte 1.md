@@ -18,22 +18,22 @@ Nesse artigo vamos aprender os conceitos básicos da AWS na prática utilizando 
 Para definir quais sistema a empresa vai usar, resolvi seguir as informações da [EAESP, da FGV](https://eaesp.fgv.br/producao-intelectual/pesquisa-anual-uso-ti). 
 
 
-![[Pasted image 20240310160830.png]]
+![[eaesp-so.png]]
 *O SO mais usado em servidores é Windows.*
 
-![[Pasted image 20240310161050.png]]
+![[eaesp-trend.png]]
 *O Linux tem crescido, mas tá longe de ser o padrão*
 
-![[Pasted image 20240310161353.png]]
+![[eaesp-so-ws.png]]
 *Nos desktops o Windows mantem a dominância, ainda vai chegar o ano do Linux do desktop*
 
 
-![[Pasted image 20240310161703.png]]
+![[eaesp-erp.png]]
 *Sistemas ERP mais usados*
 
 
 
-![[Pasted image 20240310171637.png]]
+![[easp-database.png]]
 *Banco de dados*
 
 Levando em consideração esses dados, nossa empresa vai seguir esse padrão, maioria dos servidores Windows, Desktop Windows, 
@@ -182,7 +182,7 @@ Os "tiers" de data centers referem-se a um sistema de classificação que descre
 
 Lista de Datacenters certificados pelo [Instituto Uptime](https://uptimeinstitute.com/uptime-institute-awards/country/id/BR), a maioria são Tier 3.
 
-![[Pasted image 20240308202347.png ]]
+![[datacentersbr.png]]
 *Mapa de datacenters certificados espalhados pelo Brasil*
 
 Verificando na lista, vamos ver que temos empresas especializadas em datacenter, bancos e empresas governamentais em sua maioria, até grandes empresas não desfrutam de ter um próprio datancer, inclusive cloud providers tem seus servidores em colocation com em empresas como Equinix, Tivit e Ascenty por exemplo.
@@ -199,7 +199,7 @@ As regiões e zonas da Amazon Web Services (AWS) são parte da infraestrutura gl
     
 Em resumo, as regiões da AWS representam áreas geográficas distintas, enquanto as zonas de disponibilidade são data centers isolados dentro dessas regiões.  
 
-![[Pasted image 20240308211253.png]]
+![[aws-global.png]]
 [*Infraestrutura Global da  Aws*](https://aws.amazon.com/pt/about-aws/global-infrastructure/regions_az/)
 
 
@@ -221,7 +221,7 @@ Regras básiocas sobre usuários, grupos e politicas
 - Um grupo não pode ser membro de outro grupo
 - Quando um usuário pertence a mais de um grupo, as politicas aplicadas aos grupos que ele pertence são somadas.
 
-![[Pasted image 20240309122254.png]]
+![[AprendendoAWS/images/iam.png]]
 
 Seguindo na prática
 
@@ -373,7 +373,7 @@ Importante saber que na AWS não conseguimos travar os gastos com os serviços, 
 
 17.\ Em explorador de custos você tem um relatório com os gastos, com opção de vários filtros, como intervalo de datas e nome de serviços entre outros, se você usou algum serviço Free Tier, você pode visualizar o quanto usou dele em nível gratuito.
 
-![[Pasted image 20240309130128.png]]
+![[budgets-reports.png]]
 
 
 #### ***3\. Criando a infra de redes VPC***
