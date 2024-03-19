@@ -1,5 +1,5 @@
-module github.com/imfing/hextra-starter-template
+module github.com/cslemes/blog-documentations
 
-go 1.21
+go 1.21.0
 
-require github.com/imfing/hextra v0.7.2 // indirect
+require github.com/cslemes/hextra-blog v0.0.1 // indirect
