@@ -9,13 +9,6 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-  workflow_run:
-   workflows: ["Copy Folder"]
-   branches:
-     - main
-   types:
-    - completed
-
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
@@ -35,23 +28,8 @@ defaults:
 
 jobs:
   # Build job
-
-  copy-folder:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Download All Artifacts
-      uses: actions/download-artifact@v4
-      with:
-        path: content/
-        github-token: ${{ secrets.GH_TOKEN }} # token with actions:read permissions on target repo
-        repository: cslemes/obsidian-vault1
-        run-id: 8345474179
-        
-  
-
-  
+ 
   build:
-    needs: copy-folder
     runs-on: ubuntu-latest
     env:
       HUGO_VERSION: 0.121.2
