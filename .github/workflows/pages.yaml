@@ -42,8 +42,8 @@ jobs:
     - name: Download All Artifacts
       uses: actions/download-artifact@v4
       with:
-        name: Download-Artifact
-        path: AprendendoAWS
+        name: AprendendoAWS
+        path: content/
         github-token: ${{ secrets.GH_TOKEN }} # token with actions:read permissions on target repo
         repository: cslemes/obsidian-vault1
   
