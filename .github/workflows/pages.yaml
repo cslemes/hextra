@@ -35,8 +35,21 @@ defaults:
 
 jobs:
   # Build job
+
+  copy-folder:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download All Artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: AprendendoAWS
+        github-token: ${{ secrets.GH_TOKEN }} # token with actions:read permissions on target repo
+        repository: actions/toolkit
+  
+
   
   build:
+    needs: copy-folder
     runs-on: ubuntu-latest
     env:
       HUGO_VERSION: 0.121.2
