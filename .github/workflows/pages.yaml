@@ -44,7 +44,7 @@ jobs:
       with:
         name: AprendendoAWS
         github-token: ${{ secrets.GH_TOKEN }} # token with actions:read permissions on target repo
-        repository: actions/toolkit
+        repository: cslemes/obsidian-vault1
   
 
   
