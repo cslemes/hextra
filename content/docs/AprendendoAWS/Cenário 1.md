@@ -1,3 +1,8 @@
+---
+title: Aprendendo AWS
+date: 2024-02-15T23:09:29.755Z
+type: docs
+---
 
 Nesse artigo vamos aprender os conceitos básicos da AWS na prática utilizando um cenário real de migração para cloud.
 
@@ -366,6 +371,7 @@ Vamos criar duas subnets na AZ a, uma pública e outra privada.
 
 - Estando em VPC
 - Click em **Subnets**
+- 
 - Em **VPC ID** escolha a VPC que acabamos de criar
 - Em **Subnet settings** click em Add New Subnet, 2 vezes.
 - Primeira subnet
