@@ -14,19 +14,19 @@ Nesse artigo vamos aprender os conceitos básicos da AWS na prática utilizando 
    
 Para deixar definir quais sistema a empresa vai usar, resolvi seguir as informações da [EAESP, da FGV](https://eaesp.fgv.br/producao-intelectual/pesquisa-anual-uso-ti), que elabora uma pesquisa anualmente para avaliar os recursos TI em uso nas empresas brasileiras.
 
-![[images/eaesp-so.png]]
+![Sistemas Operacionais Servidor](images/eaesp-so.png)
 *O SO mais usado em servidores é Windows.*
 
-![[images/eaesp-trend.png]]
+![Evolução Tendencia](images/eaesp-trend.png)
 *O Linux tem crescido, mas tá longe de ser o padrão*
 
-![[images/eaesp-so-ws.png]]
+![Sistema Operacional Micro](images/eaesp-so-ws.png)
 *Nos desktops o Windows mantem a dominância, ainda vai chegar o ano do Linux do desktop*
 
-![[images/eaesp-erp.png]]
+![Sistemas ERP](images/eaesp-erp.png)
 *Sistemas ERP mais usados*
 
-![[easp-database.png]]
+![Banco de Dados](images/easp-database.png)
 *Banco de dados*
 
 Levando em consideração esses dados, nossa empresa vai seguir esse padrão, maioria dos servidores Windows, Desktop Windows, 
@@ -172,7 +172,7 @@ Os "tiers" de data centers referem-se a um sistema de classificação que descre
 
 Lista de Datacenters certificados pelo [Instituto Uptime](https://uptimeinstitute.com/uptime-institute-awards/country/id/BR), a maioria são Tier 3.
 
-![[datacentersbr.png]]
+![Datacenters Brasil](images/datacentersbr.png)
 *Mapa de datacenters certificados espalhados pelo Brasil*
 
 Verificando na lista, vamos ver que temos empresas especializadas em datacenter, bancos e empresas governamentais em sua maioria, até grandes empresas não desfrutam de ter um próprio datancer, inclusive cloud providers tem seus servidores em colocation com em empresas como Equinix, Tivit e Ascenty por exemplo.
@@ -189,7 +189,7 @@ As regiões e zonas da Amazon Web Services (AWS) são parte da infraestrutura gl
     
 Em resumo, as regiões da AWS representam áreas geográficas distintas, enquanto as zonas de disponibilidade são data centers isolados dentro dessas regiões.  
 
-![[aws-global.png]]
+![Aws Global](images/aws-global.png)
 [*Infraestrutura Global da  Aws*](https://aws.amazon.com/pt/about-aws/global-infrastructure/regions_az/)
 
 
@@ -211,7 +211,7 @@ Vamos criar um usuário no Aws Console, não é recomendado usar a conta root pa
 - Um grupo não pode ser membro de outro grupo
 - Quando um usuário pertence a mais de um grupo, as politicas aplicadas aos grupos que ele pertence são somadas.
 
-![[AprendendoAWS/images/iam.png]]
+![IAM](images/iam.png)
 *Relação entre grupos, políticas e usuários
 ##### 1.2. Criando um Grupo e definindo permissões
 
@@ -225,7 +225,7 @@ Vamos criar um usuário no Aws Console, não é recomendado usar a conta root pa
 	*Há várias predefinições de políticas, e você também pode criar novas, o recomendado é ser mais específico possível e habilitar somente o recurso que cada time precisa para efetuar o seu trabalho, no caso vamos escolher administradores, para seguir esse tutorial.*
 - Click em **Create group**
 
-![[videos/Create-Group.mp4]]
+![Create Group](videos/Create-Group.mp4)
 ##### 1.3. Criando o usuário e adicionando ao grupo criado
 
 - Estando em IAM, click em **Users**
@@ -240,7 +240,7 @@ Vamos criar um usuário no Aws Console, não é recomendado usar a conta root pa
 - Conta de Usuário criado com êxito, na tela de criação podemos obter a senha do usuário, que deixamos em criar automaticamente, e o login direto para a console.
 - Efetue logoff com da conta root e logue com o usuário IAM criado.
 
-![[videos/Create-User.mp4]]
+![Create User](videos/Create-User.mp4)
 #### ***2\. Configurando o Budget na AWS***
 
 Importante saber que na AWS não conseguimos travar os gastos com os serviços, uma maneira de controlar os gastos é criando budgets, com os budgets podemos definir um valor e receber alertas quando ele for atingido.
@@ -259,7 +259,7 @@ Importante saber que na AWS não conseguimos travar os gastos com os serviços, 
 - Click em **Create budget**
 - Seu orçamento **My Zero-Spend Budget** foi criado.
 
-![[videos/ZeroSpendBudget.mp4]]
+![Zero Budget](videos/ZeroSpendBudget.mp4)
 
 ##### 2.2. Criando um orçamento mensal estipulando um valor  
 
@@ -273,13 +273,13 @@ Importante saber que na AWS não conseguimos travar os gastos com os serviços, 
 - Click em **Create budget**
 - Seu orçamento My Monthly Cost Budget foi criado.
 
-![[videos/MonthlyCostBudget.mp4]]
+![Cost Budget](videos/MonthlyCostBudget.mp4)
 
 ##### 2.3. Analisando Custos
 
 Em explorador de custos você tem um relatório com os gastos, com opção de vários filtros, como intervalo de datas e nome de serviços entre outros, se você usou algum serviço Free Tier, você pode visualizar o quanto usou dele em nível gratuito.
 
-![[images/budgets-reports.png]]
+![Report Budget](images/budgets-reports.png)
 
 
 #### ***3\. Criando a infraestrutura de redes***
@@ -359,7 +359,7 @@ IEGateway1[Internet Gateway] --> IE((Internet))
 - Deixe marcado **No IPv6 CIDR block**
 - Click em **Create VPC**
 
-![[videos/CreateVPC.mp4]]
+![Create VPC](videos/CreateVPC.mp4)
 ##### 3.2. Criando Subnets
 
 Vamos criar duas subnets na AZ a, uma pública e outra privada.
@@ -377,7 +377,7 @@ Vamos criar duas subnets na AZ a, uma pública e outra privada.
 	- Availability Zone: sa-east-1a
 	- IPv4 subnet CIDR block: 10.1.1.0/24
 
-![[videos/CreateSubnetAZa.mp4]]  
+![Create Subnet](videos/CreateSubnetAZa.mp4)]  
 
 ##### 3.3. Configurando a subnet pública
 
