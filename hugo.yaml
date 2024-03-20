@@ -16,6 +16,10 @@ markup:
   highlight:
     noClasses: false
 
+
+  enableInlineShortcodes: true
+
+
 menu:
   main:
     - name: Blog
@@ -46,9 +50,22 @@ menu:
     #     icon: x-twitter
 
 params:
+  description: Blog, docs from tech stacks
+
   navbar:
     displayTitle: true
-    displayLogo: false
+    displayLogo: true
+    logo:
+      path: images/logo.svg
+      dark: images/logo-dark.svg
+      # width: 40
+      # height: 20
+      # link: /
+    width: wide
+  
+  page:
+    # full (100%), wide (90rem), normal (1280px)
+    width: normal
 
   footer:
     displayCopyright: false
@@ -62,3 +79,14 @@ params:
     # light | dark | system
     default: system
     displayToggle: true
+
+  search:
+    enable: true
+    type: flexsearch
+
+    flexsearch:
+      # index page by: content | summary | heading | title
+      index: content
+      # full | forward | reverse | strict 
+      # https://github.com/nextapps-de/flexsearch/#tokenizer-prefix-search
+      tokenize: forward    

@@ -4,7 +4,8 @@ import sys
 
 def convert_markdown_to_html_video(directory_path):
     # Regular expression to match the Markdown image syntax for videos
-    pattern = re.compile(r'!\[.*?\]\((.*?)\)')
+    pattern = re.compile(r'!\[(.*?)\]\(videos/.*?\.mp4\)')
+    
     
     # Iterate over all files in the directory
     for filename in os.listdir(directory_path):
