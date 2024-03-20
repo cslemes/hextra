@@ -19,14 +19,18 @@ jobs:
     - name: Convert Markdown videos to HTML
       run: python adjust-video-tag.py content/docs/AprendendoAWS
 
-    # - name: Commit and push changes
-    #   run: |
-    #     git config --global user.name "Cristiano Lemes"
-    #     git config --global user.email "cslemess@gmail.com"
-    #     git add -A
-    #     git commit -m "Adjust Video tags Job"
-    #     git push
+    - name: Commit changes
+      run: |
+        git config --global user.name "Cristiano Lemes"
+        git config --global user.email "cslemess@gmail.com"
+        git add content/docs/AprendendoAWS
+        git commit -m "Update Markdown videos" || echo "No changes to commit"
 
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: main
       
 
       
