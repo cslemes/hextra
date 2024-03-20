@@ -21,15 +21,15 @@ jobs:
 
     - name: Commit changes
       run: |
-        git config --global user.name "Cristiano Lemes"
-        git config --global user.email "cslemess@gmail.com"
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
         git add content/docs/AprendendoAWS
         git commit -m "Update Markdown videos" || echo "No changes to commit"
 
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.GH_TOKEN }}
         branch: main
       
 
