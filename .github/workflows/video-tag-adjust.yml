@@ -23,10 +23,11 @@ jobs:
       run: |
         git config --local user.email "cslemess@gmail.com"
         git config --local user.name "Cristiano Lemes"
-        git remote set-url origin https://${{ secrets.GH_TOKEN }}@github.com/cslemes/blog-documentations.git
         git add content/docs/AprendendoAWS
         git commit -m "Update Markdown videos" || echo "No changes to commit"
-        git push
+        git push origin main
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
     # - name: Push changes
     #   uses: ad-m/github-push-action@master
     #   with:
