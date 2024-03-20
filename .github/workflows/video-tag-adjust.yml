@@ -24,4 +24,4 @@ jobs:
         # If your script requires any dependencies, install them here
 
     - name: Convert Markdown videos to HTML
-      run: python adjust-video-tag.py /content/docs/AprendendoAWS
+      run: python adjust-video-tag.py content/docs/AprendendoAWS
