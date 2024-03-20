@@ -19,7 +19,7 @@ jobs:
     # - name: Convert Markdown videos to HTML
     #   run: python adjust-video-tag.py content/docs/AprendendoAWS/
     - name: Setup Go
-      uses: actions/setup-go@v5
+      uses: actions/setup-go@v4
       with:
         go-version: '1.21.1'
     - name: Convert Markdown videos to HTML
