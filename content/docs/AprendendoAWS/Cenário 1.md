@@ -383,7 +383,7 @@ Vamos criar duas subnets na AZ a, uma pública e outra privada.
 	- Availability Zone: sa-east-1a
 	- IPv4 subnet CIDR block: 10.1.1.0/24
 
-![Create Subnet](videos/CreateSubnetAZa.mp4)]  
+<video scr=videos/CreateSubnetAZa.mp4/>
 
 ##### 3.3. Configurando a subnet pública
 
