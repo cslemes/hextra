@@ -10,7 +10,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Set up Python
       uses: actions/setup-python@v2
@@ -24,13 +24,16 @@ jobs:
 
     - name: Convert Markdown videos to HTML
       run: python adjust-video-tag.py content/docs/AprendendoAWS
-    - name: Commit and push changes
-      run: |
-        git config --global user.name "Cristiano Lemes"
-        git config --global user.email "cslemess@gmail.com"
-        git add -A
-        git commit -m "Adjust Video tags Job"
-        git push
+    - name: Checkout after changes
+      uses: actions/checkout@v4
+  
+    # - name: Commit and push changes
+    #   run: |
+    #     git config --global user.name "Cristiano Lemes"
+    #     git config --global user.email "cslemess@gmail.com"
+    #     git add -A
+    #     git commit -m "Adjust Video tags Job"
+    #     git push
 
       
 
