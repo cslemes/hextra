@@ -245,7 +245,7 @@ Vamos criar um usuário no Aws Console, não é recomendado usar a conta root pa
 - Conta de Usuário criado com êxito, na tela de criação podemos obter a senha do usuário, que deixamos em criar automaticamente, e o login direto para a console.
 - Efetue logoff com da conta root e logue com o usuário IAM criado.
 
-![Create User](videos/Create-User.mp4)
+<video controls width="320" height="240"><source src="Create User" type="video/mp4">Your browser does not support the video tag.</video>
 #### ***2\. Configurando o Budget na AWS***
 
 Importante saber que na AWS não conseguimos travar os gastos com os serviços, uma maneira de controlar os gastos é criando budgets, com os budgets podemos definir um valor e receber alertas quando ele for atingido.
@@ -264,7 +264,7 @@ Importante saber que na AWS não conseguimos travar os gastos com os serviços, 
 - Click em **Create budget**
 - Seu orçamento **My Zero-Spend Budget** foi criado.
 
-![Zero Budget](videos/ZeroSpendBudget.mp4)
+<video controls width="320" height="240"><source src="Zero Budget" type="video/mp4">Your browser does not support the video tag.</video>
 
 ##### 2.2. Criando um orçamento mensal estipulando um valor  
 
@@ -278,7 +278,7 @@ Importante saber que na AWS não conseguimos travar os gastos com os serviços, 
 - Click em **Create budget**
 - Seu orçamento My Monthly Cost Budget foi criado.
 
-![Cost Budget](videos/MonthlyCostBudget.mp4)
+<video controls width="320" height="240"><source src="Cost Budget" type="video/mp4">Your browser does not support the video tag.</video>
 
 ##### 2.3. Analisando Custos
 
@@ -364,7 +364,7 @@ IEGateway1[Internet Gateway] --> IE((Internet))
 - Deixe marcado **No IPv6 CIDR block**
 - Click em **Create VPC**
 
-![Create VPC](videos/CreateVPC.mp4)
+<video controls width="320" height="240"><source src="Create VPC" type="video/mp4">Your browser does not support the video tag.</video>
 ##### 3.2. Criando Subnets
 
 Vamos criar duas subnets na AZ a, uma pública e outra privada.
@@ -383,7 +383,7 @@ Vamos criar duas subnets na AZ a, uma pública e outra privada.
 	- Availability Zone: sa-east-1a
 	- IPv4 subnet CIDR block: 10.1.1.0/24
 
-![Create Subnet](videos/CreateSubnetAZa.mp4)]  
+<video controls width="320" height="240"><source src="Create Subnet" type="video/mp4">Your browser does not support the video tag.</video>]  
 
 ##### 3.3. Configurando a subnet pública
 
