@@ -230,7 +230,8 @@ Vamos criar um usuário no Aws Console, não é recomendado usar a conta root pa
 	*Há várias predefinições de políticas, e você também pode criar novas, o recomendado é ser mais específico possível e habilitar somente o recurso que cada time precisa para efetuar o seu trabalho, no caso vamos escolher administradores, para seguir esse tutorial.*
 - Click em **Create group**
 
-![Create group](videos/Create-Group.mp4)
+
+![Create group](videos/Create-Group.gif)
 ##### 1.3. Criando o usuário e adicionando ao grupo criado
 
 - Estando em IAM, click em **Users**
