@@ -230,7 +230,7 @@ Vamos criar um usuário no Aws Console, não é recomendado usar a conta root pa
 	*Há várias predefinições de políticas, e você também pode criar novas, o recomendado é ser mais específico possível e habilitar somente o recurso que cada time precisa para efetuar o seu trabalho, no caso vamos escolher administradores, para seguir esse tutorial.*
 - Click em **Create group**
 
-<video controls width="320" height="240"><source src="Create Group" type="video/mp4">Your browser does not support the video tag.</video>
+![Create group](videos/Create-Group.mp4)
 ##### 1.3. Criando o usuário e adicionando ao grupo criado
 
 - Estando em IAM, click em **Users**
@@ -245,7 +245,7 @@ Vamos criar um usuário no Aws Console, não é recomendado usar a conta root pa
 - Conta de Usuário criado com êxito, na tela de criação podemos obter a senha do usuário, que deixamos em criar automaticamente, e o login direto para a console.
 - Efetue logoff com da conta root e logue com o usuário IAM criado.
 
-<video controls width="320" height="240"><source src="Create User" type="video/mp4">Your browser does not support the video tag.</video>
+![Create User](videos/Create-User.mp4)
 #### ***2\. Configurando o Budget na AWS***
 
 Importante saber que na AWS não conseguimos travar os gastos com os serviços, uma maneira de controlar os gastos é criando budgets, com os budgets podemos definir um valor e receber alertas quando ele for atingido.
@@ -264,7 +264,7 @@ Importante saber que na AWS não conseguimos travar os gastos com os serviços, 
 - Click em **Create budget**
 - Seu orçamento **My Zero-Spend Budget** foi criado.
 
-<video controls width="320" height="240"><source src="Zero Budget" type="video/mp4">Your browser does not support the video tag.</video>
+![Zero Budget](videos/ZeroSpendBudget.mp4)
 
 ##### 2.2. Criando um orçamento mensal estipulando um valor  
 
@@ -278,7 +278,7 @@ Importante saber que na AWS não conseguimos travar os gastos com os serviços, 
 - Click em **Create budget**
 - Seu orçamento My Monthly Cost Budget foi criado.
 
-<video controls width="320" height="240"><source src="Cost Budget" type="video/mp4">Your browser does not support the video tag.</video>
+![Cost Budget](videos/MonthlyCostBudget.mp4)
 
 ##### 2.3. Analisando Custos
 
@@ -364,7 +364,7 @@ IEGateway1[Internet Gateway] --> IE((Internet))
 - Deixe marcado **No IPv6 CIDR block**
 - Click em **Create VPC**
 
-<video controls width="320" height="240"><source src="Create VPC" type="video/mp4">Your browser does not support the video tag.</video>
+![Create VPC](videos/CreateVPC.mp4)
 ##### 3.2. Criando Subnets
 
 Vamos criar duas subnets na AZ a, uma pública e outra privada.
@@ -383,7 +383,7 @@ Vamos criar duas subnets na AZ a, uma pública e outra privada.
 	- Availability Zone: sa-east-1a
 	- IPv4 subnet CIDR block: 10.1.1.0/24
 
-<video controls width="320" height="240"><source src="Create Subnet" type="video/mp4">Your browser does not support the video tag.</video>]  
+![Create Subnet](videos/CreateSubnetAZa.mp4)]  
 
 ##### 3.3. Configurando a subnet pública
 
