@@ -12,12 +12,18 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
+    # - name: Set up Python
+    #   uses: actions/setup-python@v5
+    #   with:
+    #     python-version: '3.10'
+    # - name: Convert Markdown videos to HTML
+    #   run: python adjust-video-tag.py content/docs/AprendendoAWS/
+    - name: Setup Go
+      uses: actions/setup-go@v4
       with:
-        python-version: '3.10'
+        go-version: '1.21.1'
     - name: Convert Markdown videos to HTML
-      run: python adjust-video-tag.py content/docs/AprendendoAWS/
+      run: go run add-video-tag.go content/docs/AprendendoAWS/
 
     - name: Commit changes
       run: |
