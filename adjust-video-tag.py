@@ -21,7 +21,8 @@ def convert_markdown_to_html_video(directory_path):
             
             # Write the modified content back to the file
             with open(file_path, 'w') as file:
-                file.write(modified_content)
+                # file.write(modified_content)
+                file.write("Teste ")
             print(f"Processed: {file_path}")
 
 if __name__ == "__main__":
