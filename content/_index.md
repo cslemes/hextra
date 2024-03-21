@@ -42,23 +42,25 @@ toc: hextra-home
 
 {{< hextra/feature-grid >}}
   {{< hextra/feature-card
-    title="Criando um Cluster Kubernetes na AKS"
-    subtitle="Explorando o processo passo a passo para criar um cluster Kubernete."
+    title="Blog"
+    subtitle="Explore os artigos do Blog"
     class="hx-aspect-auto md:hx-aspect-[1.1/1] max-md:hx-min-h-[340px]"
     image="images/Contrutores.jpg"
     imageClass="hx-top-[40%] hx-left-[24px] hx-w-[180%] sm:hx-w-[110%] dark:hx-opacity-80"
     style="background: radial-gradient(ellipse at 50% 80%,rgba(194,97,254,0.15),hsla(0,0%,100%,0));"
-    link="/blog/criando-um-cluster-aks-4f76/"
+    link="/blog"
 
   >}}
   {{< hextra/feature-card
-    title="Docker Gpu no Windows"
-    subtitle="Configurando Ambiente de Desenvolvimento com GPU no Windows usando Docker e WSL2"
+    title="Explore Documentações"
+    subtitle="Artigos mais extensos em formato de documentação"
     class="hx-aspect-auto md:hx-aspect-[1.1/1] max-lg:hx-min-h-[340px]"
     image="images/docker-gpu.png"
     imageClass="hx-top-[40%] hx-left-[36px] hx-w-[180%] sm:hx-w-[110%] dark:hx-opacity-80"
     style="background: radial-gradient(ellipse at 50% 80%,rgba(142,53,74,0.15),hsla(0,0%,100%,0));"
+    link="/docs"
   >}}
+  <!-- 
   {{< hextra/feature-card
     title="Oh My Posh: O Oh My Zsh do Windows"
     subtitle="O Oh My Zsh é uma ferramenta bem conhecida"
@@ -67,7 +69,7 @@ toc: hextra-home
     imageClass="hx-top-[40%] hx-left-[36px] hx-w-[110%] sm:hx-w-[110%] dark:hx-opacity-80"
     style="background: radial-gradient(ellipse at 50% 80%,rgba(221,210,59,0.15),hsla(0,0%,100%,0));"
   >}}
-  <!-- {{< hextra/feature-card
+  {{< hextra/feature-card
     title="Lightweight as a Feather"
     subtitle="No dependency or Node.js is needed to use Hextra. Powered by Hugo, one of *the fastest* static site generators, building your site in just seconds with a single binary."
   >}}
