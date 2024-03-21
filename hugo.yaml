@@ -1,6 +1,25 @@
 # Hugo configuration file
 title: Cristiano Lemes
 
+
+outputs:
+  home: [HTML]
+  page: [HTML]
+  section: [HTML, RSS]
+
+
+# defaultContentLanguage: br
+# languages:
+#   en:
+#     languageName: English
+#     weight: 1
+#     title: Hextra
+#   br:
+#     languageName: Brasileiro
+#     weight: 1
+#     title: Hextra
+
+
 # import hextra as module
 module:
   imports:
