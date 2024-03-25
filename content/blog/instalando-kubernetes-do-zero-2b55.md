@@ -1,15 +1,9 @@
 ---
-title: "Instalando Kubernetes do Zero"
-excerpt: "Introdução   O Kubernetes emergiu como a principal plataforma de orquestração de containers,..."
-coverImage: "https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fuczlklfhkyf9irwr5tnd.jpg"
-date: "2024-03-03T13:39:33.756Z"
-author:
-  name: Cristiano Lemes 
-  picture: "https://media.dev.to/cdn-cgi/image/width=640,height=640,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Fuser%2Fprofile_image%2F1274606%2F8a58746b-64ae-43c4-9e24-22973943bee9.jpg"
-ogImage:
-  url: "https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fuczlklfhkyf9irwr5tnd.jpg"
----  
-
+title: ' "Instalando Kubernetes do Zero"'
+date: '"2024-03-03T13:39:33.756Z"'
+author: Cristiano Lemes
+coverImage: '"https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fuczlklfhkyf9irwr5tnd.jpg"'
+---
 ### Introdução
 
 O Kubernetes emergiu como a principal plataforma de orquestração de containers, permitindo que organizações gerenciem e dimensionem aplicativos de maneira eficiente em ambientes de produção e desenvolvimento. Com sua arquitetura distribuída e recursos de automação robustos, o Kubernetes simplifica a implantação, o gerenciamento e a escalabilidade de aplicativos em containers.
