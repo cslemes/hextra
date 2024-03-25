@@ -1,14 +1,11 @@
 ---
-title: "Oh My Posh: O Oh My Zsh do Windows"
-excerpt: "O Oh My Zsh é uma ferramenta bem conhecida para customizar o terminal Zsh, usado em distribuições..."
-coverImage: "https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fmmxr5clqgi86kjbqetgo.png"
-date: "2024-02-15T23:09:29.755Z"
-author:
-  name: Cristiano Lemes 
-  picture: "https://media.dev.to/cdn-cgi/image/width=640,height=640,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Fuser%2Fprofile_image%2F1274606%2F8a58746b-64ae-43c4-9e24-22973943bee9.jpg"
-ogImage:
-  url: "https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fmmxr5clqgi86kjbqetgo.png"
----  
+title: '"Oh My Posh: O Oh My Zsh do Windows"'
+author: '"https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fmmxr5clqgi86kjbqetgo.png"'
+date: '"2024-02-15T23:09:29.755Z"'
+coverImage: ' "https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fmmxr5clqgi86kjbqetgo.png"'
+ogImage: '"https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fmmxr5clqgi86kjbqetgo.png"'
+excerpt: '"O Oh My Zsh é uma ferramenta bem conhecida para customizar o terminal Zsh, usado em distribuições..."'
+---
 
 O Oh My Zsh é uma ferramenta bem conhecida para customizar o terminal Zsh, usado em distribuições Linux e no macOS. Além de oferecer uma variedade de temas, o Oh My Zsh também possui uma ampla gama de plugins, como completions, que ajudam a aumentar a produtividade.
 
