@@ -1,5 +1,5 @@
 module github.com/cslemes/blog-documentations
 
-go 1.21
+go 1.21.0
 
-require github.com/cslemes/hextra-blog v0.0.4 // indirect
+require github.com/cslemes/hextra-blog v0.0.5 // indirect
