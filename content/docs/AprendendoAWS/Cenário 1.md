@@ -433,7 +433,7 @@ Vamos criar um usuário no Aws Console, não é recomendado usar a conta root pa
 	*Há várias predefinições de políticas, e você também pode criar novas, o recomendado é ser mais específico possível e habilitar somente o recurso que cada time precisa para efetuar o seu trabalho, no caso vamos escolher administradores, para seguir esse tutorial.*
 - Click em **Create group**
 
-![Create group](videos/Create-Group.mp4)
+![Create group](publicados/docs/AprendendoAWS/videos/Create-Group.mp4)
 ##### 1.3. Criando o usuário e adicionando ao grupo criado
 
 - Estando em IAM, click em **Users**
@@ -448,7 +448,7 @@ Vamos criar um usuário no Aws Console, não é recomendado usar a conta root pa
 - Conta de Usuário criado com êxito, na tela de criação podemos obter a senha do usuário, que deixamos em criar automaticamente, e o login direto para a console.
 - Efetue logoff com da conta root e logue com o usuário IAM criado.
 
-![Create User](videos/Create-User.mp4)
+![Create User](publicados/docs/AprendendoAWS/videos/Create-User.mp4)
 #### ***2\. Configurando o Budget na AWS***
 
 Importante saber que na AWS não conseguimos travar os gastos com os serviços, uma maneira de controlar os gastos é criando budgets, com os budgets podemos definir um valor e receber alertas quando ele for atingido.
@@ -467,7 +467,7 @@ Importante saber que na AWS não conseguimos travar os gastos com os serviços, 
 - Click em **Create budget**
 - Seu orçamento **My Zero-Spend Budget** foi criado.
 
-![Zero Budget](videos/ZeroSpendBudget.mp4)
+![Zero Budget](publicados/docs/AprendendoAWS/videos/ZeroSpendBudget.mp4)
 
 ##### 2.2. Criando um orçamento mensal estipulando um valor  
 
@@ -481,7 +481,7 @@ Importante saber que na AWS não conseguimos travar os gastos com os serviços, 
 - Click em **Create budget**
 - Seu orçamento My Monthly Cost Budget foi criado.
 
-![Cost Budget](videos/MonthlyCostBudget.mp4)
+![Cost Budget](publicados/docs/AprendendoAWS/videos/MonthlyCostBudget.mp4)
 
 ##### 2.3. Analisando Custos
 
@@ -564,7 +564,7 @@ IEGateway1[Internet Gateway] --> IE((Internet))
 - Deixe marcado **No IPv6 CIDR block**
 - Click em **Create VPC**
 
-![Create VPC](videos/CreateVPC.mp4)
+![Create VPC](publicados/docs/AprendendoAWS/videos/CreateVPC.mp4)
 ##### 3.2. Criando Subnets
 
 Vamos criar duas subnets na AZ a, uma pública e outra privada.
@@ -582,7 +582,7 @@ Vamos criar duas subnets na AZ a, uma pública e outra privada.
 	- Availability Zone: sa-east-1a
 	- IPv4 subnet CIDR block: 10.1.1.0/24
 
-![Create Subnet](videos/CreateSubnetAZa.mp4)  
+![Create Subnet](publicados/docs/AprendendoAWS/videos/CreateSubnetAZa.mp4)  
 
 ##### 3.3. Configurando a subnet pública
 
@@ -593,7 +593,7 @@ Vamos criar duas subnets na AZ a, uma pública e outra privada.
 - Em Auto-assign IP settings, marque a opção **Enable auto-assign public IPv4 address**
 - Click em save
 
-![Public IP](videos/Enable-publicip.mp4)
+![Public IP](publicados/docs/AprendendoAWS/videos/Enable-publicip.mp4)
 
 ***3.3.2. Criando um internet gateway***
 - Estando em VPC
@@ -602,7 +602,7 @@ Vamos criar duas subnets na AZ a, uma pública e outra privada.
 - Em Name tag, vamos colocar **IGW01**
 - Click em **Create internet gateway** 
 
-![Create IGW](videos/Create-igw.mp4)
+![Create IGW](publicados/docs/AprendendoAWS/videos/Create-igw.mp4)
 
 ***3.3.3. Anexando o internet gateway a VPC***
 - Estando em VPC
@@ -610,7 +610,7 @@ Vamos criar duas subnets na AZ a, uma pública e outra privada.
 - Na lista de Internet gateways , click com botão direito em IGW01, escolha **attach to VPC**
 - Em available VPCs, click em *Attach internet gateway*
 
-![Attach IGW](videos/Attach-IGW.mp4)
+![Attach IGW](publicados/docs/AprendendoAWS/videos/Attach-IGW.mp4)
 
 ***3.3.4 Criando a tabela de roteamento***
 
@@ -621,7 +621,7 @@ Vamos criar duas subnets na AZ a, uma pública e outra privada.
 - Em VPC, vamos selecionar **vpc-01**
 - Click em **Create route table**
 
-![Public Route Table](PublicRouteTable.mp4)
+![Public Route Table](publicados/docs/AprendendoAWS/videos/PublicRouteTable.mp4)
 
 ***3.3.5. Criando rota padrão na subnet pública
 
@@ -639,7 +639,7 @@ Vamos criar duas subnets na AZ a, uma pública e outra privada.
 
 1. A rota 0.0.0.0/0 vai encaminhar toda rota que não estiver definida explicitamente para o internet gateway.
 
-![Rota Padrão](videos/RotaPadraoIGW.mp4)
+![Rota Padrão](publicados/docs/AprendendoAWS/videos/RotaPadraoIGW.mp4)
 
 ***3.3.5. Associando a route table a subnet pública***
 
@@ -651,7 +651,7 @@ Vamos criar duas subnets na AZ a, uma pública e outra privada.
 - Marque PublicSubnetA
 - Click em Save associations
  
-![Public Subnet Association](videos/PublicSubnetAssociation.mp4)
+![Public Subnet Association](publicados/docs/AprendendoAWS/videos/PublicSubnetAssociation.mp4)
 
 ##### 3.4 Configurando a subnet privada
 
@@ -668,7 +668,7 @@ Vamos criar duas subnets na AZ a, uma pública e outra privada.
 1. O NATGateway não pode estar na mesma subnet que será usado, e ele precisa de um internet gateway para sair para internet, por isso estamos colocando na PublicSubnetA para ser usado pela PrivateSubnetA.
 2. O Elastic IP é um ip publico que vai ficar reservado a sua conta, ele não é apagado quando deletamos o objeto que ele está associado, ex: se apagar o NAT gateway, o elastic ip vai continuar existindo, só será desalocado e poderá ser usado por outra instância. 
 
-![Nat Gateway](videos/CreateNATGW.mp4)
+![Nat Gateway](publicados/docs/AprendendoAWS/videos/CreateNATGW.mp4)
 
 ***3.4.2. Criando a route table privada***
 
@@ -679,7 +679,7 @@ Vamos criar duas subnets na AZ a, uma pública e outra privada.
 - Em VPC, vamos selecionar **vpc-01**
 - Click em **Create route table**
 
-![Create RT privada](videos/CreateRT-private.mp4)
+![Create RT privada](publicados/docs/AprendendoAWS/videos/CreateRT-private.mp4)
 
 ***3.4.3.  Criando rota padrão na subnet privada***
 
@@ -694,7 +694,7 @@ Vamos criar duas subnets na AZ a, uma pública e outra privada.
 - Selecione o NATGW01
 - Click em Save changes
 
-![Rota NAT](videos/RotaPadraoNAT.mp4)
+![Rota NAT](publicados/docs/AprendendoAWS/videos/RotaPadraoNAT.mp4)
 
 ***3.4.4. Associando a route table a subnet privada***
 
@@ -706,7 +706,7 @@ Vamos criar duas subnets na AZ a, uma pública e outra privada.
 - Marque PrivateSubnetA
 - Click em Save associations
 
-![Associate Subnet Private](PublicSubnetAssociation.mp4)
+![Associate Subnet Private](publicados/docs/AprendendoAWS/videos/PublicSubnetAssociation.mp4)
 
 #### *4\. Criando uma VM usando EC2*
 
