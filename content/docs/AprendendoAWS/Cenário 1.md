@@ -2,73 +2,198 @@
 title: Aprendendo AWS
 date: 2024-02-15T23:09:29.755Z
 type: docs
+author:
 ---
 
-Nesse artigo vamos aprender os conceitos básicos da AWS na prática utilizando um cenário real de migração para cloud.
+### Introdução
 
-- Vamos Utilizar: IAM, EC2, EBS, S3, RDS, S3, ELB, AWS Backup, VPC,  Application Migration Service
-#### Avaliando os Requisitos
+Neste artigo, vamos explorar os conceitos básicos da AWS na prática, utilizando um cenário real de migração para a nuvem.
+Vamos utilizar uma variedade de serviços da AWS, incluindo IAM, EC2, EBS, S3, RDS, ELB, AWS Backup, VPC e Application Migration Service. 
 
-*Qual o Négocio*?
-  - Empresa de varejo, com lojas físicas, tipo americanas e casas Bahia.
-  - 10 Filiais, sendo 5 em Shopping
-  - Funciona de 08:00 as 22:00 de segunda a sábado
-  - Lojas de Shopping abrem de 14:00 as 22:00 no Domingo
-  - 5 pontos de vendas por loja (50 total)
-  - 20 Usuários no Escritório
-   
+#### Estabelecendo o cenário
+
 Para deixar definir quais sistema a empresa vai usar, resolvi seguir as informações da [EAESP, da FGV](https://eaesp.fgv.br/producao-intelectual/pesquisa-anual-uso-ti), que elabora uma pesquisa anualmente para avaliar os recursos TI em uso nas empresas brasileiras.
 
-![Sistemas Operacionais Servidor](images/eaesp-so.png)
-*O SO mais usado em servidores é Windows.*
+De acordo com os dados coletados:
 
-![Evolução Tendencia](images/eaesp-trend.png)
-*O Linux tem crescido, mas tá longe de ser o padrão*
+```mermaid
+pie title Sistema Operacional no Servidor
+"Linux": 18
+"Outros": 4
+"Windows": 78
 
-![Sistema Operacional Micro](images/eaesp-so-ws.png)
-*Nos desktops o Windows mantem a dominância, ainda vai chegar o ano do Linux do desktop*
+```
+- *O SO mais usado em servidores é Windows.*
 
-![Sistemas ERP](images/eaesp-erp.png)
-*Sistemas ERP mais usados*
 
-![Banco de Dados](images/easp-database.png)
-*Banco de dados*
+```mermaid
+pie title Sistema Operacional estações de trabalho
+"Linux": 2
+"Outros": 1
+"Windows": 97
+```
+- *Nos desktops o Windows mantem a dominância.*
 
-Levando em consideração esses dados, nossa empresa vai seguir esse padrão, maioria dos servidores Windows, Desktop Windows, 
+```mermaid
+pie title Sistema de Gestão (ERP)
+"SAP": 33
+"TOTVS": 35
+"Oracle": 12
+"Outros": 20
 
-Para o ERP Vamos seguir a média dos requisitos dos ERP mais usados, lembrando que estamos tomando como referencia somente, não estamos simulando a instalação e migração real dessa aplicação.
+```
 
-Nossa empresa tem apenas 20 usuários para o ERP, portanto:
-- Cada usuário consome 200MB então 20 x 200 4000MB + 8196MB(Para o SO) = 12GB no servidor de aplicação.
+- *Sistemas ERP mais usados*
+
+
+```mermaid
+pie title Sistema de Banco de dados (SGDB)
+"Oracle / Mysql": 41
+"SQL Server /Access": 41
+"Outros": 18
+
+```
+
+- *Gerenciadores de Banco de dados*
+
+Levando em consideração esses dados, nossa empresa optou por seguir o padrão predominante, utilizando principalmente servidores e desktops Windows. Quanto ao ERP, adotamos uma abordagem baseada nos requisitos médios dos sistemas mais utilizados. É importante ressaltar que essas decisões são baseadas apenas em referências e não refletem necessariamente uma instalação e migração real dessas aplicações.
+Ao longo deste artigo, vamos abordar como cada serviço da AWS pode ser utilizado para suportar esse cenário, garantindo uma migração suave e eficiente para a nuvem.
+
+
+### Avaliando os Requisitos
+
+#### Descrição da Empresa
+
+Vamos considerar uma empresa de varejo, semelhante às Americanas ou Casas Bahia, com uma presença significativa em lojas físicas e um escritório central. Vamos chamar essa empresa de "VarejoMax".
+**VarejoMax** é uma empresa de varejo que opera em 10 filiais, incluindo 5 em shopping centers, com lojas funcionando de segunda a sábado das 08:00 às 22:00 e os shopping centers de 14:00 às 22:00 no domingo. Cada loja possui 5 pontos de venda, totalizando 50 pontos de venda em todo o negócio, cada loja possui 2 usuários operacionais, 20 total. Além disso, o escritório possui 20 usuários Admistrativos.
+
+#### Infraestrutura e Tecnologia
+
+- **Sistemas de Ponto de Venda (POS)**: VarejoMax utiliza sistemas de ponto de venda avançados que integram com o sistema de gerenciamento de inventário e o sistema de ERP para fornecer uma visão unificada dos dados de vendas, estoque e finanças.
+- **Sistema de Gerenciamento de Inventário**: Um sistema robusto que permite ao VarejoMax gerenciar o estoque de forma eficiente, otimizando a rotação de produtos e minimizando o desperdício.
+- **Sistema de ERP**: Um sistema ERP personalizado que integra todos os processos de negócios, incluindo vendas, compras, finanças, logística e recursos humanos.
+
+#### Desafios e Oportunidades
+
+- **Desafios**: A principal desafio para VarejoMax é manter a eficiência operacional em um ambiente de varejo de alta rotação, onde a precisão e a velocidade são críticas. Além disso, a empresa enfrenta desafios relacionados à gestão de grandes volumes de dados gerados pelas transações de vendas e pela análise de dados.
+- **Oportunidades**: VarejoMax vê oportunidades em áreas como a implementação de tecnologias de inteligência artificial (IA) e aprendizado de máquina para melhorar a experiência do cliente e otimizar as operações internas. A empresa também pode explorar oportunidades de expansão em novos mercados e a adoção de novas tecnologias de e-commerce.
+
+#### Detalhando o ambiente
+
+Considerando que nosso ERP, usando uma estimativa genérica, consome 200MB de RAM por usuário e a VarejoMax tem  35 usuários para o ERP, portanto:
+
+- Cada usuário consome 200MB então 40 x 200 8000MB + 8196MB(Para o SO) = 16 GB no servidor de aplicação, colocando uma margem chegamos a 24 .
 - 8vCPU, ele recomenda 4 CPU físicas para até 100 usuários, como vamos usar virtualização, então 8vCPU, 4 cores + HyperThread. 
 
 | Servidor de Aplicação | Virtual        |
 | --------------------- | -------------- |
 | Sistema Operacional   | Windows Server |
 | CPU                   | 8vCPU          |
-| Mémoria RAM           | 12 GB          |
+| Mémoria RAM           | 24 GB          |
 | Disco SO + PageFile   | 50GB           |
 | Disco Dados           | 200 GB         |
 O cliente (é uma aplicação cliente servidor), no momento é instalada em cada desktop da empresa.
-Aplicação Cliente
 
+***Aplicação Cliente***
 - CPU: 5% a 30% de uso do processador.
 - Memória RAM: 100 MB a 1 GB de memória.
 - Rede: 1 MB a 10 MB de largura de banda por hora de uso.
 
-Para o banco de dados, vamos usar o MySQL.
+Para o banco de dados do ERP, vamos usar o MySQL.
+Os requisitos de CPU e memoria baseado em um ambiente de até 100 usuários, baseados na documentação padrão de ERP de mercado.
+Temos 3 roles de usuários, cada tipo tem sua media de consumo mensal de banco.
 
-| Servidor de Aplicação | Bare Metal |
-| --------------------- | ---------- |
-| Sistema Operacional   | Debian     |
-| CPU                   | 4 CPU      |
-| Mémoria RAM           | 32 GB      |
-| Disco SO              | 100GB      |
-| Disco Dados           | 500 GB     |
+| Role           | Qtd | Disco | Total /m | 5 Anos |
+| -------------- | --- | ----- | -------- | ------ |
+| Administrativo | 15  | 5 GB  | 75 GB    | 4,5 TB |
+| Operações      | 20  | 2 GB  | 40 GB    | 2,5 TB |
+| Financeiro     | 5   | 5 GB  | 25 GB    | 1,5 TB |
+
+O Hardware do servidor ficou da seguinte forma:
+
+| Banco de Dados      | Bare Metal |
+| ------------------- | ---------- |
+| Sistema Operacional | Debian     |
+| CPU                 | 8 CPU      |
+| Mémoria RAM         | 32 GB      |
+| Disco SO SSD        | 100GB      |
+| Disco Dados SAS     | 10,8 TB    |
+
+***Para o servidor de aplicação do POS***
+Os requisitos de CPU e memoria baseado em um ambiente de até 100 POS, baseados na documentação padrão de sistemas POS de mercado.
+
+| Servidor de Aplicação | Virtual        |
+| --------------------- | -------------- |
+| Sistema Operacional   | Windows Server |
+| CPU                   | 4vCPU          |
+| Mémoria RAM           | 8 GB           |
+| Disco SO + PageFile   | 50GB           |
+| Disco Dados           | 200 GB         |
+
+***Para o banco de dados do POS, vamos usar o Oracle.***
+
+Para calcular o total de horas que a empresa "VarejoMax" fica aberta por mês, precisamos considerar o horário de funcionamento semanal e o número de semanas no mês. Vamos assumir que a empresa opera de segunda a sábado, com lojas funcionando de 08:00 às 22:00 e os shopping centers de 14:00 às 22:00 no domingo.
+
+1.\ Cálculo das Horas por Semana
+
+- **Lojas**: De segunda a sábado, as lojas funcionam por 14 horas (de 08:00 às 22:00). Isso resulta em 14 horas por dia * 5 dias = 70 horas por semana.
+- **Shopping Centers**: No domingo, os shopping centers funcionam por 8 horas (de 14:00 às 22:00). Isso resulta em 8 horas por dia * 1 dia = 8 horas por semana.
+
+2.\ Cálculo das Horas por Mês
+
+- **Total de Horas por Semana**: 70 horas (lojas) + 8 horas (shopping centers) = 78 horas por semana.
+- **Número de Semanas por Mês**: Um mês típico tem aproximadamente 4 semanas e 1 dia (4.33 semanas).
+
+3.\ Cálculo das Horas por Mês
+
+- **Total de Horas por Mês**: 78 horas por semana * 4.33 semanas = 347,44 horas por mês.
+
+4.\ Estrutura de Dados
+Para uma transação típica, podemos considerar os seguintes campos:
+
+- **ID da Transação**: Um identificador único para cada transação.
+- **ID do Cliente**: Um identificador para o cliente que realizou a transação.
+- **Data e Hora da Transação**: A data e a hora em que a transação ocorreu.
+- **Itens da Transação**: Uma lista de itens comprados, incluindo ID do item, quantidade e preço unitário.
+- **Total da Transação**: O valor total da transação.
+
+5.\ Estimativa de Espaço por Transação
+
+Vamos assumir que cada campo tem um tamanho aproximado:
+
+- **ID da Transação**: 10 bytes (assumindo um tipo de dados INT).
+- **ID do Cliente**: 10 bytes (assumindo um tipo de dados INT).
+- **Data e Hora da Transação**: 8 bytes (assumindo um tipo de dados DATETIME).
+- **Itens da Transação**: Dependendo da quantidade de itens e dos detalhes armazenados para cada item, isso pode variar significativamente. Para uma estimativa, vamos assumir que cada item tem um ID de 10 bytes, uma quantidade de 2 bytes e um preço unitário de 5 bytes, totalizando 17 bytes por item. Se uma transação tiver, por exemplo, 5 itens, isso ocuparia 85 bytes.
+- **Total da Transação**: 5 bytes (assumindo um tipo de dados DECIMAL).
+
+6.\ Cálculo do Espaço Total por Transação
+
+- **Espaço Total por Transação**: 10 bytes (ID da Transação) + 10 bytes (ID do Cliente) + 8 bytes (Data e Hora) + 85 bytes (Itens) + 5 bytes (Total) = 118 bytes por transação.
+
+7.\ Estimava genérica cupons por hora
+
+- 10 lojas x 20 cupons por hora: 200 cupons 
+- total 23MB por hora
+
+
+8.\ Resumo de consumo
+   - 347,44 horas x 23 MB = 8 GB por mês
+   - Em 5 anos 40 GB
+
+| Banco de Dados      | Bare Metal |
+| ------------------- | ---------- |
+| Sistema Operacional | Centos     |
+| CPU                 | 4 CPU      |
+| Mémoria RAM         | 16 GB      |
+| Disco SO SSD        | 100GB      |
+| Disco Dados SAS     | 1,2 TB     |
 
 ***O que tem na empresa***
- - 1 Servidor de Aplicação Windows (Todas roles da aplicação estão nesse servidor)
- - 1 Banco de dados Linux
+ - 1 Servidor de Aplicação Windows (Todas roles da aplicação ERP estão nesse servidor)
+ - 1 Servido do sistema de POS
+ - 1 Banco de dados Mysql
+ - 1 Bando de dados Oracle
  - 1 Servidor de Arquivos Windows
  - 1 Servidor de Impressão Windows
  - 1 Active directory Windows
@@ -112,6 +237,7 @@ subgraph Datacenter
        RDP[\"Terminal Server"\]:::olive
        FS[\"Servidor de Arquivos"\]:::olive
        APP[\"Aplicação Web"\]:::olive
+       APP1[\"Aplicação POS"\]:::olive
 	   SW1 --> DNSP & RDP & FS & APP         
 	end
     subgraph Bare Metal
@@ -119,7 +245,7 @@ subgraph Datacenter
       DB1[("Banco de Stand BY")]:::darkgrey
       APP-.->DB
       RDP-.->DB
-      DB<-.->DB1
+      APP1-.->DB1
 	end
 end
 
@@ -151,52 +277,129 @@ IE<-.->FW
 
 #### *Porque migrar?*
 
-Uma parte importante de migrar ou não para cloud, requer analises de objetivos do negócio, analise de custos, arquitetura de aplicativos, segurança, desempenho.
 
-*Quais gaps precisam ser resolvidos*
-- Negócio: A empresa está crescendo e o ambiente atual não suporta as demandas, umas das soluções é adquirir mais hardware
-- Segurança física: A única proteção de acesso aos servidores é uma chave.
-- Energia: A sala de dados possui somente em no-break que suporta 2 horas sem energia, e possui somente um fornecedor de energia externa.
-- Disponibilidade
-- Escalabilidade
-- Backup são feitos localmente
+A migração para a computação em nuvem pode resolver vários problemas, melhorando significativamente a eficiência, segurança e escalabilidade dos sistemas de uma empresa. Vamos explorar alguns gaps comuns em infraestruturas on-premises a importância de cada um desses gaps e como a computação em nuvem pode abordá-los:
 
-#### O que é cloud?
+1. **Negócio**: A crescente demanda de uma empresa que excede a capacidade do ambiente atual é um indicativo claro de que a infraestrutura atual não está mais atendendo às necessidades do negócio. A migração para a nuvem permite escalar rapidamente os recursos conforme necessário, sem a necessidade de adquirir e manter hardware adicional. Isso não apenas reduz os custos de capital, mas também libera recursos para focar em outras áreas do negócio.
+
+2. **Segurança Física**: A dependência de uma única chave para acesso aos servidores é um risco significativo de segurança. A computação em nuvem oferece soluções robustas de autenticação e autorização, incluindo a autenticação de dois fatores e a integração com sistemas de gerenciamento de identidade. Isso reduz o risco de acesso não autorizado e aumenta a segurança dos dados.
+
+3. **Energia**: A dependência de um único fornecedor de energia e a falta de um sistema de backup de energia confiável são preocupações significativas. A computação em nuvem oferece redundância e alta disponibilidade, garantindo que os serviços estejam sempre disponíveis, mesmo em caso de falhas de energia ou problemas com o fornecedor de energia. Além disso, a computação em nuvem elimina a necessidade de manter infraestrutura física, incluindo servidores e sistemas de energia.
+
+4. **Disponibilidade**: A migração para a nuvem pode melhorar significativamente a disponibilidade dos serviços. A computação em nuvem permite a replicação de dados e aplicativos em várias regiões geográficas, garantindo que os serviços estejam sempre disponíveis, mesmo em caso de falhas regionais.
+
+5. **Escalabilidade**: A capacidade de escalar rapidamente os recursos conforme necessário é uma vantagem crucial da computação em nuvem. Isso permite que as empresas atendam às demandas de crescimento sem a necessidade de investir em infraestrutura adicional.
+
+6. **Backup Local**: A dependência de backups locais pode ser um risco significativo, pois os dados podem ser perdidos ou corrompidos. A computação em nuvem oferece soluções de backup e recuperação de desastres robustas, garantindo que os dados estejam sempre seguros e acessíveis.
+
+Em resumo, a migração para a computação em nuvem pode resolver muitos dos problemas identificados nos gaps mencionados, oferecendo soluções robustas de segurança, alta disponibilidade, escalabilidade e confiabilidade de backup. Isso não apenas melhora a eficiência operacional, mas também permite que as empresas se concentrem em suas principais prioridades de negócio.
+
+#### O que é cloud computing?
+
+O termo cloud computing (computação em nuvem), foi criado pelo US Nation Institute of Standards and Technology (NIST) apesar disso, sua definição é abragente a todo mundo. A definição do NIST é baseada em uma série de características e princípios que descrevem o que é computação em nuvem. Aqui está uma síntese da definição do NIST, conforme descrito na Publicação Especial 800-145:
+
+1. **Acesso à Internet**: A computação em nuvem é caracterizada pelo acesso à internet, permitindo que os usuários acessem recursos de computação de forma conveniente e à demanda.
+
+2. **Modelos de Serviço**: A computação em nuvem é oferecida através de um modelo de serviço que pode incluir infraestrutura como serviço (IaaS), plataforma como serviço (PaaS) e software como serviço (SaaS).
+
+3. **Recursos Compartilhados**: Os recursos de computação são compartilhados entre vários usuários, permitindo que os recursos sejam rapidamente provisionados e liberados conforme necessário.
+
+4. **Escalabilidade**: A computação em nuvem permite que os recursos sejam escalados rapidamente para atender às demandas dos usuários.
+
+5. **Gestão de Serviços**: A gestão dos serviços de nuvem é realizada pelo provedor de serviços, reduzindo a necessidade de gestão de infraestrutura por parte dos usuários.
+
+6. **Modelos de Implementação**: A computação em nuvem pode ser implementada de várias maneiras, incluindo nuvem pública, nuvem privada e nuvem híbrida.
+
+7. **Segurança e Privacidade**: Embora a computação em nuvem ofereça benefícios significativos em termos de escalabilidade e conveniência, é crucial que os provedores de serviços implementem medidas de segurança e privacidade robustas para proteger os dados e informações dos usuários.
+
+8. **Portabilidade**: Os aplicativos e dados armazenados na nuvem devem ser portáteis, permitindo que eles sejam facilmente movidos entre diferentes ambientes de nuvem conforme necessário.
+
+A definição do NIST é bem sólida para entender o que é computação em nuvem, mostrando que é algo que pode ser usado em qualquer lugar do mundo, fácil de acessar e que se adapta bem. E claro, não podemos esquecer de falar sobre a segurança, privacidade e a facilidade de mover coisas de um lugar para outro.
+
+#### Tipos de nuvens?
+
+A computação em cloud pode ser categorizada em três tipos principais: nuvem pública, nuvem privada e nuvem híbrida. Cada um desses modelos tem características distintas que determinam como os dados e aplicativos são armazenados, gerenciados e acessados.
+
+1. **Cloud Pública**: Neste modelo, os recursos de computação são fornecidos por um provedor de serviços de terceiros através da internet. A nuvem pública é acessível a qualquer pessoa com uma conexão à internet e oferece uma maneira econômica de acessar recursos de computação sem a necessidade de investir em infraestrutura própria. Exemplos de provedores de nuvem pública incluem Amazon Web Services (AWS), Google Cloud Platform (GCP) e Microsoft Azure.
+
+2. **Cloud Privada**: A nuvem privada é uma infraestrutura de computação em nuvem dedicada a uma única organização. Ela é projetada para ser usada exclusivamente por essa organização, oferecendo um alto nível de controle sobre os dados e a infraestrutura. A nuvem privada pode ser hospedada internamente pela própria organização ou por um provedor de serviços de terceiros. Ela é comumente usada por empresas que têm requisitos de segurança ou regulatórios específicos que exigem um alto nível de controle sobre seus dados.
+
+3. **Cloud Híbrida**: A nuvem híbrida combina recursos de nuvem pública e privada, permitindo que as organizações aproveitem os benefícios de ambas. Isso pode incluir o uso de recursos de nuvem pública para escalar rapidamente e lidar com picos de demanda, enquanto mantém dados sensíveis ou críticos em uma nuvem privada para garantir a segurança e o controle. A nuvem híbrida oferece flexibilidade e permite que as organizações migrem facilmente entre diferentes ambientes conforme necessário.
+
+Cada um desses modelos de nuvem tem suas próprias vantagens e desvantagens, e a escolha entre eles depende das necessidades específicas de uma organização em termos de segurança, controle, custo e escalabilidade.
+
+#### *Cloud providers*
+
+Os principais provedores de serviços de computação em nuvem são:
+
+1. **Amazon Web Services (AWS)**: É uma plataforma de serviços de computação em nuvem oferecida pela Amazon.com Inc. AWS é conhecida por sua ampla gama de serviços, incluindo computação, armazenamento, banco de dados, análise, aplicativos móveis, desenvolvimento de jogos, Internet das Coisas, segurança e redes. A AWS é altamente escalável e oferece uma grande flexibilidade para atender a uma variedade de necessidades de negócios.
+
+2. **Google Cloud Platform (GCP)**: É uma plataforma de serviços de computação em nuvem oferecida pelo Google. GCP oferece uma ampla gama de produtos e serviços, incluindo computação, armazenamento, banco de dados, análise, inteligência artificial, Internet das Coisas, desenvolvimento de aplicativos móveis, desenvolvimento de jogos, segurança e redes. A GCP é conhecida por sua infraestrutura robusta e pela facilidade de uso de seus serviços.
+
+3. **Microsoft Azure**: É uma plataforma de serviços de computação em nuvem oferecida pela Microsoft. Azure oferece uma ampla gama de serviços, incluindo computação, armazenamento, banco de dados, análise, aplicativos móveis, desenvolvimento de jogos, Internet das Coisas, segurança e redes. A Azure é conhecida por sua integração com outros produtos da Microsoft, o que pode ser uma vantagem significativa para empresas que já utilizam soluções da Microsoft.
+
+4. **IBM Cloud**: É uma plataforma de serviços de computação em nuvem oferecida pela IBM. A IBM Cloud oferece uma ampla gama de serviços, incluindo computação, armazenamento, banco de dados, análise, aplicativos móveis, desenvolvimento de jogos, Internet das Coisas, segurança e redes. A IBM Cloud é conhecida por sua robustez e confiabilidade, oferecendo soluções que atendem a necessidades críticas de negócios.
+
+5. **Oracle Cloud**: É uma plataforma de serviços de computação em nuvem oferecida pela Oracle Corporation. A Oracle Cloud oferece uma ampla gama de serviços, incluindo computação, armazenamento, banco de dados, análise, aplicativos móveis, desenvolvimento de jogos, Internet das Coisas, segurança e redes. A Oracle Cloud é conhecida por sua robustez e confiabilidade, oferecendo soluções que atendem a necessidades críticas de negócios.
+
+Cada um desses provedores tem suas próprias forças e fraquezas, e a escolha do provedor certo depende das necessidades específicas do projeto ou negócio.
+
+#### *A Amazon Web Services AWS*
+
+A Amazon Web Services (AWS) oferece uma ampla gama de serviços que abrangem várias categorias, permitindo que as empresas construam, execute e escale aplicativos e serviços de maneira eficiente. Aqui está uma visão mais detalhada dos serviços oferecidos pela AWS e sua disponibilidade global:
+
+***Computação***
+
+- **Amazon EC2 (Elastic Compute Cloud)**: Permite aos usuários alugar capacidade de computação virtual na nuvem. É altamente escalável e oferece uma ampla gama de tipos de instâncias para atender a diferentes necessidades de aplicativos.
+- **AWS Lambda**: Permite aos usuários executar código sem provisionar ou gerenciar servidores. É ideal para aplicações que precisam de escalabilidade automática e pagamento apenas pelo tempo de computação usado.
+- **Amazon Elastic Container Service (ECS)** e **Amazon Elastic Kubernetes Service (EKS)**: Oferecem serviços gerenciados para executar contêineres, facilitando a implantação, gerenciamento e escalabilidade de aplicativos baseados em contêineres.
+
+***Armazenamento***
+
+- **Amazon S3 (Simple Storage Service)**: Um serviço de armazenamento de objetos que oferece escalabilidade, disponibilidade de dados, segurança e desempenho. É ideal para armazenar e recuperar qualquer quantidade de dados em qualquer momento.
+- **Amazon EBS (Elastic Block Store)**: Fornece armazenamento de blocos de alto desempenho para uso com instâncias EC2, ideal para bancos de dados e aplicações que requerem persistência de dados.
+- **Amazon Glacier**: Um serviço de armazenamento de longo prazo para arquivar dados que não são acessados com frequência.
+
+***Banco de Dados***
+
+- **Amazon RDS (Relational Database Service)**: Oferece serviços de banco de dados relacional gerenciados, suportando vários motores de banco de dados, como MySQL, PostgreSQL, Oracle, e SQL Server.
+- **Amazon DynamoDB**: Um banco de dados NoSQL totalmente gerenciado que oferece desempenho rápido e previsível com escalabilidade automática.
+- **Amazon Redshift**: Um serviço de armazenamento de dados em nuvem que permite executar consultas complexas em grandes conjuntos de dados.
+
+***Análise de dados***
+
+- **Amazon Athena**: Um serviço de consulta interativa que permite analisar dados diretamente no Amazon S3 usando SQL padrão.
+- **Amazon EMR (Elastic MapReduce)**: Um framework que facilita o processamento de grandes conjuntos de dados usando o Apache Hadoop e outras estruturas de processamento de dados.
+- **Amazon QuickSight**: Uma plataforma de visualização de dados que permite aos usuários criar dashboards interativos e relatórios.
+
+***Aplicativos Móveis***
+
+- **AWS Amplify**: Uma plataforma que permite aos desenvolvedores criar aplicativos móveis e web escaláveis e de alta performance.
+- **Amazon Cognito**: Fornece autenticação, autorização e gerenciamento de usuários para aplicativos móveis e web.
+
+***Segurança***
+
+- **AWS Identity and Access Management (IAM)**: Permite aos usuários gerenciar o acesso a serviços e recursos da AWS de forma segura.
+- **Amazon Inspector**: Um serviço de segurança que automatiza a varredura de vulnerabilidades de segurança em aplicativos.
+- **AWS Shield**: Protege contra ataques DDoS, oferecendo proteção contra ataques de negação de serviço.
+
+***Disponibilidade Global***
+
+A AWS tem uma rede global de data centers, com presença em várias regiões ao redor do mundo. Isso permite que os usuários acessem os serviços da AWS de qualquer lugar, com baixa latência e alta disponibilidade. A AWS também oferece serviços como Amazon CloudFront para entrega de conteúdo e Amazon Route 53 para DNS e balanceamento de carga, que ajudam a otimizar a performance e a disponibilidade dos aplicativos.
 
 
-
-
-#### *Datacenter Tiers*
-
-Os "tiers" de data centers referem-se a um sistema de classificação que descreve a disponibilidade e confiabilidade das instalações de um data center. Existem quatro níveis principais, cada um representando um padrão de infraestrutura e redundância, conforme definido pelo [Uptime Institute](https://uptimeinstitute.com/) :
-
-- Tier 1: O Tier 1 é o nível básico e oferece a menor disponibilidade. Geralmente, possui uma infraestrutura simples, sem redundância de componentes críticos. Pode ser propenso a interrupções para manutenção e atualizações.
-- Tier 2: O Tier 2 oferece um pouco mais de confiabilidade que o Tier 1, com alguma redundância em componentes críticos, como fontes de energia e sistemas de refrigeração. No entanto, ainda pode ser interrompido para manutenção planejada.
-- Tier 3: O Tier 3 é projetado para fornecer uma maior disponibilidade do que os níveis anteriores. Possui redundância em todos os componentes críticos e permite a manutenção sem interrupção dos serviços. Geralmente, possui N+1 de redundância, o que significa que há backup completo para todos os componentes essenciais.
-- Tier 4: O Tier 4 é o nível mais alto de disponibilidade e confiabilidade. Ele oferece redundância completa em todos os aspectos, incluindo energia, refrigeração, conectividade de rede e segurança. Além disso, é projetado para suportar falhas individuais sem interrupção dos serviços. Os data centers Tier 4 são os mais caros de construir e operar, mas oferecem o mais alto nível de garantia de tempo de atividade.
-
-Lista de Datacenters certificados pelo [Instituto Uptime](https://uptimeinstitute.com/uptime-institute-awards/country/id/BR), a maioria são Tier 3.
-
-![Datacenters Brasil](images/datacentersbr.png)
-*Mapa de datacenters certificados espalhados pelo Brasil*
-
-Verificando na lista, vamos ver que temos empresas especializadas em datacenter, bancos e empresas governamentais em sua maioria, até grandes empresas não desfrutam de ter um próprio datancer, inclusive cloud providers tem seus servidores em colocation com em empresas como Equinix, Tivit e Ascenty por exemplo.
-Sendo assim a nossa empresa tem duas opções disponíveis para alcançar suas metas dentro do seu budget, colocation e cloud.
-
- 
 #### ***Regiões e Zonas  AWS***
   
 As regiões e zonas da Amazon Web Services (AWS) são parte da infraestrutura global da AWS para hospedar serviços em nuvem. 
 
 1\. Regiões: As regiões da AWS são áreas geográficas separadas que consistem em várias zonas de disponibilidade. Cada região é composta por dois ou mais data centers que são isolados fisicamente e estão localizados em áreas distintas para aumentar a resiliência e a disponibilidade dos serviços. As regiões da AWS estão localizadas em todo o mundo e permitem que os clientes implantem aplicativos em locais geograficamente diversos para melhorar a resiliência e a latência.
-    
+
 2\. Zonas de Disponibilidade: As zonas de disponibilidade são data centers isolados dentro de uma região que são conectados por redes de baixa latência e alta largura de banda. Cada zona de disponibilidade é projetada para ser independente das outras zonas, com infraestrutura de energia, refrigeração e rede próprias. Isso significa que uma falha em uma zona de disponibilidade não afetará as outras.
-    
+
 Em resumo, as regiões da AWS representam áreas geográficas distintas, enquanto as zonas de disponibilidade são data centers isolados dentro dessas regiões.  
 
 ![Aws Global](images/aws-global.png)
 [*Infraestrutura Global da  Aws*](https://aws.amazon.com/pt/about-aws/global-infrastructure/regions_az/)
-
 
 
 ### Criando a Infraestrutura na AWS
@@ -230,7 +433,7 @@ Vamos criar um usuário no Aws Console, não é recomendado usar a conta root pa
 	*Há várias predefinições de políticas, e você também pode criar novas, o recomendado é ser mais específico possível e habilitar somente o recurso que cada time precisa para efetuar o seu trabalho, no caso vamos escolher administradores, para seguir esse tutorial.*
 - Click em **Create group**
 
-![Create group](videos/Create-Group.gif)
+![Create group](videos/Create-Group.mp4)
 ##### 1.3. Criando o usuário e adicionando ao grupo criado
 
 - Estando em IAM, click em **Users**
@@ -292,12 +495,11 @@ Em explorador de custos você tem um relatório com os gastos, com opção de v�
 O primeiro item de infraestrutura que vamos criar é a rede, você pode criar outros itens não tendo a rede criada, mas nesse caso a AWS vai criar automaticamente uma rede padrão para este serviço.
 Vamos criar duas subnets uma vai ter ip público, vai poder ser  e outra vai ter apenas ips privados. 
 Nossa infra não será muito grande, por isso vamos uma VPC /22 vai ser suficiente.
--- Dúvidas sobre CIDRs, pode olhar nessa documentação da [Digital Ocean](https://www.digitalocean.com/community/tutorials/understanding-ip-addresses-subnets-and-cidr-notation-for-networking).
 
 Os 3 Primeiros ips de cada subrede são reservados pela AWS, o primeiro ip é para o VPC Router (Gateway), o segundo é o DNS da Amazon, o terceiro está reservado para uso futuro.
 Lembrando que o primeiro ip da Subnet é o id de rede, é o ultimo é o ip de Broadcast, que também não podem serem usados.
 
-3.1 Overview serviços da VPC
+###### 3.1 Overview serviços da VPC
 
 - ***VPC:*** Significa Virtual Private Cloud, permite que você crie uma rede virtual, permitindo isolamento entre recursos.
 - ***Subnet:*** É uma subdivisão do intervalo de ip da VPC, serve para organizar, criar rotas, regras de segurança, permitindo uma gerencia do tráfego na VPC.
@@ -309,7 +511,7 @@ Lembrando que o primeiro ip da Subnet é o id de rede, é o ultimo é o ip de Br
 - ***VPC Endpoints:*** VPC Endpoints fornecem conexões diretas a serviços gerenciados pela AWS, como S3, DynamoDB e SNS, sem a necessidade de roteamento pela Internet pública. Eles garantem uma comunicação segura e eficiente entre a VPC e esses serviços, contribuindo para uma arquitetura mais robusta e segura na nuvem.
 
 
-Diagrama da rede.
+Diagrama da rede da empresa.
 
 ```mermaid
 flowchart TB;
@@ -348,8 +550,6 @@ end
 IEGateway1[Internet Gateway] --> IE((Internet))
 ```
 
-
-
 ##### 3.1. Criando uma VPC
 
 - Vá até a Página inicial do Aws console
@@ -371,7 +571,6 @@ Vamos criar duas subnets na AZ a, uma pública e outra privada.
 
 - Estando em VPC
 - Click em **Subnets**
-- 
 - Em **VPC ID** escolha a VPC que acabamos de criar
 - Em **Subnet settings** click em Add New Subnet, 2 vezes.
 - Primeira subnet
@@ -383,36 +582,140 @@ Vamos criar duas subnets na AZ a, uma pública e outra privada.
 	- Availability Zone: sa-east-1a
 	- IPv4 subnet CIDR block: 10.1.1.0/24
 
-<video scr=..videos/CreateSubnetAZa.mp4/>
+![Create Subnet](videos/CreateSubnetAZa.mp4)  
 
 ##### 3.3. Configurando a subnet pública
 
-***3.3.1.  Habilitando Subnet para receber ips públicos por padrão ***
+***3.3.1.  Habilitando Subnet para receber ips públicos por padrão***
 - Estando em VPC
 - Click em **Subnets**
 - Na lista de subnets , click com botão direito em PublicSubnetA, escolha **edit subnet settings**
 - Em Auto-assign IP settings, marque a opção **Enable auto-assign public IPv4 address**
 - Click em save
 
+![Public IP](videos/Enable-publicip.mp4)
 
-
-****3.3.2. Criando um internet gateway***
+***3.3.2. Criando um internet gateway***
 - Estando em VPC
 - Click em **Internet gateways**
 - Click no botão **Create internet gateways**
 - Em Name tag, vamos colocar **IGW01**
 - Click em **Create internet gateway** 
 
-***3.3.3. Anexando o internet gateway a subnet**
+![Create IGW](videos/Create-igw.mp4)
+
+***3.3.3. Anexando o internet gateway a VPC***
 - Estando em VPC
 - Em **Internet gateways**
 - Na lista de Internet gateways , click com botão direito em IGW01, escolha **attach to VPC**
+- Em available VPCs, click em *Attach internet gateway*
 
+![Attach IGW](videos/Attach-IGW.mp4)
+
+***3.3.4 Criando a tabela de roteamento***
+
+- Estando em VPC
+- Vá em Rote Tables
+- Click no botão **Create route table**
+- Em name vamos colocar, **PublicRouteTable**
+- Em VPC, vamos selecionar **vpc-01**
+- Click em **Create route table**
+
+![Public Route Table](PublicRouteTable.mp4)
+
+***3.3.5. Criando rota padrão na subnet pública
+
+- Estando em VPC
+- Vá em Rote Tables
+- Selecione a rota PublicRouteTable
+- Click em Actions e em Edit Routes
+- Note que já existe uma rota padrão para VPC local
+- Em edit routes, click em *Add route*
+- Ele vai criar uma entrada Route 2
+- Em destination coloque 0.0.0.0/0¹
+- Em target, selecion Internet Gateway
+- Selecione o IGW01
+- Click em Save changes
+
+1. A rota 0.0.0.0/0 vai encaminhar toda rota que não estiver definida explicitamente para o internet gateway.
+
+![Rota Padrão](videos/RotaPadraoIGW.mp4)
+
+***3.3.5. Associando a route table a subnet pública***
+
+- Estando em VPC
+- Vá em Rote Tables
+- Selecione a rota PublicRouteTable
+- Click em Actions e em Edit subnet associations
+- Em Available subnets 
+- Marque PublicSubnetA
+- Click em Save associations
+ 
+![Public Subnet Association](videos/PublicSubnetAssociation.mp4)
+
+##### 3.4 Configurando a subnet privada
+
+***3.4.1. Criando um NAT gateway***
+- Estando em VPC
+- Click em **NAT gateways**
+- Click no botão **Create NAT gateways**
+- Em Name tag, vamos colocar **NATGW01**
+- Em subnet vamos escolher **PublicSubnetA¹**
+- Connectivity type Public
+- Em Elastic IP allocation ID, click Allocate Elastic IP²
+- Click em **create NAT gateway**
+
+1. O NATGateway não pode estar na mesma subnet que será usado, e ele precisa de um internet gateway para sair para internet, por isso estamos colocando na PublicSubnetA para ser usado pela PrivateSubnetA.
+2. O Elastic IP é um ip publico que vai ficar reservado a sua conta, ele não é apagado quando deletamos o objeto que ele está associado, ex: se apagar o NAT gateway, o elastic ip vai continuar existindo, só será desalocado e poderá ser usado por outra instância. 
+
+![Nat Gateway](videos/CreateNATGW.mp4)
+
+***3.4.2. Criando a route table privada***
+
+- Estando em VPC
+- Vá em Rote Tables
+- Click no botão **Create route table**
+- Em name vamos colocar, **PrivateRouteTable**
+- Em VPC, vamos selecionar **vpc-01**
+- Click em **Create route table**
+
+![Create RT privada](videos/CreateRT-private.mp4)
+
+***3.4.3.  Criando rota padrão na subnet privada***
+
+- Estando em VPC
+- Vá em Rote Tables
+- Selecione a rota PrivateRouteTable
+- Click em Actions e em Edit Routes
+- Em edit routes, click em *Add route*
+- Ele vai criar uma entrada Route 2
+- Em destination coloque 0.0.0.0/0
+- Em target, selecione NAT Gateway
+- Selecione o NATGW01
+- Click em Save changes
+
+![Rota NAT](videos/RotaPadraoNAT.mp4)
+
+***3.4.4. Associando a route table a subnet privada***
+
+- Estando em VPC
+- Vá em Rote Tables
+- Selecione a rota PrivateRouteTable
+- Click em Actions e em Edit subnet associations
+- Em Available subnets 
+- Marque PrivateSubnetA
+- Click em Save associations
+
+![Associate Subnet Private](PublicSubnetAssociation.mp4)
 
 #### *4\. Criando uma VM usando EC2*
 
 
+
 #### ***5\. Conectando o ambiente on premises com a cloud***
+
+
+
 
 Nessa etapa vamos criar uma VPN Ipsec entre a Digital Ocean e a AWS para simular a conexão entre o ambiente on premises com a cloud.
 
@@ -429,6 +732,5 @@ AWS Application migration service.
 #### 10.\ Implementando Monitoramento CloudWatch
 
 #### *11.\ Redirecionando os serviços para aws usando Route 53*
-
 
 
