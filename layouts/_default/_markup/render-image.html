@@ -1,0 +1,34 @@
+{{- $alt := .PlainText | safeHTML -}}
+{{- $lazyLoading := .Page.Site.Params.enableImageLazyLoading | default true -}}
+{{- $dest := .Destination -}}
+
+{{- $isLocal := not (urls.Parse $dest).Scheme -}}
+{{- $isPage := and (eq .Page.Kind "page") (not .Page.BundleType) -}}
+{{- $startsWithSlash := hasPrefix $dest "/" -}}
+{{- $startsWithRelative := hasPrefix $dest "../" -}}
+
+{{- $isMP4 := strings.HasSuffix $dest ".mp4" -}}
+
+{{- if and $dest $isLocal -}}
+  {{- if $startsWithSlash -}}
+    {{/* Images under static directory */}}
+    {{- $dest = (relURL (strings.TrimPrefix "/" $dest)) -}}
+  {{- else if and $isPage (not $startsWithRelative) -}}
+    {{/* Images that are sibling to the individual page file */}}
+    {{ $dest = (printf "../%s" $dest) }}
+  {{- end -}}
+{{- end -}}
+
+{{- if $isMP4 -}}
+  <video controls {{ if $lazyLoading }}loading="lazy"{{ end }}>
+    <source src="{{ $dest | safeURL }}" type="video/mp4">
+    Seu navegador não suporta o elemento de vídeo.
+  </video>
+{{- else if .Title -}}
+  <figure>
+    <img src="{{ $dest | safeURL }}" title="{{ .Title }}" alt="{{ $alt }}" {{ if $lazyLoading }}loading="lazy"{{ end }} />
+    <figcaption>{{ .Title }}</figcaption>
+  </figure>
+{{- else -}}
+  <img src="{{ $dest | safeURL }}" alt="{{ $alt }}" {{ if $lazyLoading }}loading="lazy"{{ end }} />
+{{- end -}}
