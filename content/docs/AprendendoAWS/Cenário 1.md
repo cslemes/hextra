@@ -131,21 +131,21 @@ Os requisitos de CPU e memoria baseado em um ambiente de até 100 POS, baseados 
 
 Para calcular o total de horas que a empresa "VarejoMax" fica aberta por mês, precisamos considerar o horário de funcionamento semanal e o número de semanas no mês. Vamos assumir que a empresa opera de segunda a sábado, com lojas funcionando de 08:00 às 22:00 e os shopping centers de 14:00 às 22:00 no domingo.
 
-1.\ Cálculo das Horas por Semana
+1. Cálculo das Horas por Semana
 
 - **Lojas**: De segunda a sábado, as lojas funcionam por 14 horas (de 08:00 às 22:00). Isso resulta em 14 horas por dia * 5 dias = 70 horas por semana.
 - **Shopping Centers**: No domingo, os shopping centers funcionam por 8 horas (de 14:00 às 22:00). Isso resulta em 8 horas por dia * 1 dia = 8 horas por semana.
 
-2.\ Cálculo das Horas por Mês
+2. Cálculo das Horas por Mês
 
 - **Total de Horas por Semana**: 70 horas (lojas) + 8 horas (shopping centers) = 78 horas por semana.
 - **Número de Semanas por Mês**: Um mês típico tem aproximadamente 4 semanas e 1 dia (4.33 semanas).
 
-3.\ Cálculo das Horas por Mês
+3. Cálculo das Horas por Mês
 
 - **Total de Horas por Mês**: 78 horas por semana * 4.33 semanas = 347,44 horas por mês.
 
-4.\ Estrutura de Dados
+4. Estrutura de Dados
 Para uma transação típica, podemos considerar os seguintes campos:
 
 - **ID da Transação**: Um identificador único para cada transação.
@@ -154,7 +154,7 @@ Para uma transação típica, podemos considerar os seguintes campos:
 - **Itens da Transação**: Uma lista de itens comprados, incluindo ID do item, quantidade e preço unitário.
 - **Total da Transação**: O valor total da transação.
 
-5.\ Estimativa de Espaço por Transação
+5. Estimativa de Espaço por Transação
 
 Vamos assumir que cada campo tem um tamanho aproximado:
 
@@ -164,17 +164,17 @@ Vamos assumir que cada campo tem um tamanho aproximado:
 - **Itens da Transação**: Dependendo da quantidade de itens e dos detalhes armazenados para cada item, isso pode variar significativamente. Para uma estimativa, vamos assumir que cada item tem um ID de 10 bytes, uma quantidade de 2 bytes e um preço unitário de 5 bytes, totalizando 17 bytes por item. Se uma transação tiver, por exemplo, 5 itens, isso ocuparia 85 bytes.
 - **Total da Transação**: 5 bytes (assumindo um tipo de dados DECIMAL).
 
-6.\ Cálculo do Espaço Total por Transação
+6. Cálculo do Espaço Total por Transação
 
 - **Espaço Total por Transação**: 10 bytes (ID da Transação) + 10 bytes (ID do Cliente) + 8 bytes (Data e Hora) + 85 bytes (Itens) + 5 bytes (Total) = 118 bytes por transação.
 
-7.\ Estimava genérica cupons por hora
+7. Estimava genérica cupons por hora
 
 - 10 lojas x 20 cupons por hora: 200 cupons 
 - total 23MB por hora
 
 
-8.\ Resumo de consumo
+8. Resumo de consumo
    - 347,44 horas x 23 MB = 8 GB por mês
    - Em 5 anos 40 GB
 
@@ -405,7 +405,7 @@ Em resumo, as regiões da AWS representam áreas geográficas distintas, enquant
 
 ### Criando a Infraestrutura na AWS
 
-#### ***1\. Criando usuários usando o IAM***
+##### 1. Criando usuários usando o IAM***
 
 Vamos pular a parte de criar a conta na AWS, para não ficar tão longo, já que o processo é simples, qualquer dúvida, pode olhar na [documentação oficial](https://docs.aws.amazon.com/accounts/latest/reference/welcome-first-time-user.html)
 Vamos criar um usuário no Aws Console, não é recomendado usar a conta root para tarefas guarde ela para caso haja algum problemas nas contas Admin e precise recupera-las.
@@ -434,7 +434,7 @@ Vamos criar um usuário no Aws Console, não é recomendado usar a conta root pa
 	*Há várias predefinições de políticas, e você também pode criar novas, o recomendado é ser mais específico possível e habilitar somente o recurso que cada time precisa para efetuar o seu trabalho, no caso vamos escolher administradores, para seguir esse tutorial.*
 - Click em **Create group**
 
-![Create group](AprendendoAWS/videos/Create-Group.mp4)
+![Create group](videos/Create-Group.mp4)
 ##### 1.3. Criando o usuário e adicionando ao grupo criado
 
 - Estando em IAM, click em **Users**
@@ -449,8 +449,8 @@ Vamos criar um usuário no Aws Console, não é recomendado usar a conta root pa
 - Conta de Usuário criado com êxito, na tela de criação podemos obter a senha do usuário, que deixamos em criar automaticamente, e o login direto para a console.
 - Efetue logoff com da conta root e logue com o usuário IAM criado.
 
-![Create User](AprendendoAWS/videos/Create-User.mp4)
-#### ***2\. Configurando o Budget na AWS***
+![Create User](videos/Create-User.mp4)
+#### ***2. Configurando o Budget na AWS***
 
 Importante saber que na AWS não conseguimos travar os gastos com os serviços, uma maneira de controlar os gastos é criando budgets, com os budgets podemos definir um valor e receber alertas quando ele for atingido.
 
@@ -468,7 +468,7 @@ Importante saber que na AWS não conseguimos travar os gastos com os serviços, 
 - Click em **Create budget**
 - Seu orçamento **My Zero-Spend Budget** foi criado.
 
-![Zero Budget](AprendendoAWS/videos/ZeroSpendBudget.mp4)
+![Zero Budget](videos/ZeroSpendBudget.mp4)
 
 ##### 2.2. Criando um orçamento mensal estipulando um valor  
 
@@ -482,7 +482,7 @@ Importante saber que na AWS não conseguimos travar os gastos com os serviços, 
 - Click em **Create budget**
 - Seu orçamento My Monthly Cost Budget foi criado.
 
-![Cost Budget](AprendendoAWS/videos/MonthlyCostBudget.mp4)
+![Cost Budget](videos/MonthlyCostBudget.mp4)
 
 ##### 2.3. Analisando Custos
 
@@ -491,7 +491,7 @@ Em explorador de custos você tem um relatório com os gastos, com opção de v�
 ![Report Budget](images/budgets-reports.png)
 
 
-#### ***3\. Criando a infraestrutura de redes***
+#### ***3. Criando a infraestrutura de redes***
 
 O primeiro item de infraestrutura que vamos criar é a rede, você pode criar outros itens não tendo a rede criada, mas nesse caso a AWS vai criar automaticamente uma rede padrão para este serviço.
 Vamos criar duas subnets uma vai ter ip público, vai poder ser  e outra vai ter apenas ips privados. 
@@ -551,7 +551,7 @@ end
 IEGateway1[Internet Gateway] --> IE((Internet))
 ```
 
-##### 3.1. Criando uma VPC
+##### 3.2. Criando uma VPC
 
 - Vá até a Página inicial do Aws console
 - Escreva **vpc** na barra de pesquisa
@@ -565,8 +565,8 @@ IEGateway1[Internet Gateway] --> IE((Internet))
 - Deixe marcado **No IPv6 CIDR block**
 - Click em **Create VPC**
 
-![Create VPC](AprendendoAWS/videos/CreateVPC.mp4)
-##### 3.2. Criando Subnets
+![Create VPC](videos/CreateVPC.mp4)
+##### 3.3. Criando Subnets
 
 Vamos criar duas subnets na AZ a, uma pública e outra privada.
 
@@ -583,37 +583,37 @@ Vamos criar duas subnets na AZ a, uma pública e outra privada.
 	- Availability Zone: sa-east-1a
 	- IPv4 subnet CIDR block: 10.1.1.0/24
 
-![Create Subnet](AprendendoAWS/videos/CreateSubnetAZa.mp4)  
+![Create Subnet](videos/CreateSubnetAZa.mp4)  
 
-##### 3.3. Configurando a subnet pública
+##### 3.4. Configurando a subnet pública
 
-***3.3.1.  Habilitando Subnet para receber ips públicos por padrão***
+***3.4.1.  Habilitando Subnet para receber ips públicos por padrão***
 - Estando em VPC
 - Click em **Subnets**
 - Na lista de subnets , click com botão direito em PublicSubnetA, escolha **edit subnet settings**
 - Em Auto-assign IP settings, marque a opção **Enable auto-assign public IPv4 address**
 - Click em save
 
-![Public IP](AprendendoAWS/videos/Enable-publicip.mp4)
+![Public IP](videos/Enable-publicip.mp4)
 
-***3.3.2. Criando um internet gateway***
+***3.4.2. Criando um internet gateway***
 - Estando em VPC
 - Click em **Internet gateways**
 - Click no botão **Create internet gateways**
 - Em Name tag, vamos colocar **IGW01**
 - Click em **Create internet gateway** 
 
-![Create IGW](AprendendoAWS/videos/Create-igw.mp4)
+![Create IGW](videos/Create-igw.mp4)
 
-***3.3.3. Anexando o internet gateway a VPC***
+***3.4.3. Anexando o internet gateway a VPC***
 - Estando em VPC
 - Em **Internet gateways**
 - Na lista de Internet gateways , click com botão direito em IGW01, escolha **attach to VPC**
 - Em available VPCs, click em *Attach internet gateway*
 
-![Attach IGW](AprendendoAWS/videos/Attach-IGW.mp4)
+![Attach IGW](videos/Attach-IGW.mp4)
 
-***3.3.4 Criando a tabela de roteamento***
+***3.4.4 Criando a tabela de roteamento***
 
 - Estando em VPC
 - Vá em Rote Tables
@@ -622,9 +622,9 @@ Vamos criar duas subnets na AZ a, uma pública e outra privada.
 - Em VPC, vamos selecionar **vpc-01**
 - Click em **Create route table**
 
-![Public Route Table](AprendendoAWS/videos/PublicRouteTable.mp4)
+![Public Route Table](videos/PublicRouteTable.mp4)
 
-***3.3.5. Criando rota padrão na subnet pública
+***3.4.5. Criando rota padrão na subnet pública
 
 - Estando em VPC
 - Vá em Rote Tables
@@ -640,9 +640,9 @@ Vamos criar duas subnets na AZ a, uma pública e outra privada.
 
 1. A rota 0.0.0.0/0 vai encaminhar toda rota que não estiver definida explicitamente para o internet gateway.
 
-![Rota Padrão](AprendendoAWS/videos/RotaPadraoIGW.mp4)
+![Rota Padrão](videos/RotaPadraoIGW.mp4)
 
-***3.3.5. Associando a route table a subnet pública***
+***3.4.6. Associando a route table a subnet pública***
 
 - Estando em VPC
 - Vá em Rote Tables
@@ -652,11 +652,11 @@ Vamos criar duas subnets na AZ a, uma pública e outra privada.
 - Marque PublicSubnetA
 - Click em Save associations
  
-![Public Subnet Association](AprendendoAWS/videos/PublicSubnetAssociation.mp4)
+![Public Subnet Association](videos/PublicSubnetAssociation.mp4)
 
-##### 3.4 Configurando a subnet privada
+##### 3.5 Configurando a subnet privada
 
-***3.4.1. Criando um NAT gateway***
+***3.5.1. Criando um NAT gateway***
 - Estando em VPC
 - Click em **NAT gateways**
 - Click no botão **Create NAT gateways**
@@ -669,9 +669,9 @@ Vamos criar duas subnets na AZ a, uma pública e outra privada.
 1. O NATGateway não pode estar na mesma subnet que será usado, e ele precisa de um internet gateway para sair para internet, por isso estamos colocando na PublicSubnetA para ser usado pela PrivateSubnetA.
 2. O Elastic IP é um ip publico que vai ficar reservado a sua conta, ele não é apagado quando deletamos o objeto que ele está associado, ex: se apagar o NAT gateway, o elastic ip vai continuar existindo, só será desalocado e poderá ser usado por outra instância. 
 
-![Nat Gateway](AprendendoAWS/videos/CreateNATGW.mp4)
+![Nat Gateway](videos/CreateNATGW.mp4)
 
-***3.4.2. Criando a route table privada***
+***3.5.2. Criando a route table privada***
 
 - Estando em VPC
 - Vá em Rote Tables
@@ -680,9 +680,9 @@ Vamos criar duas subnets na AZ a, uma pública e outra privada.
 - Em VPC, vamos selecionar **vpc-01**
 - Click em **Create route table**
 
-![Create RT privada](AprendendoAWS/videos/CreateRT-private.mp4)
+![Create RT privada](videos/CreateRT-private.mp4)
 
-***3.4.3.  Criando rota padrão na subnet privada***
+***3.5.3.  Criando rota padrão na subnet privada***
 
 - Estando em VPC
 - Vá em Rote Tables
@@ -695,9 +695,9 @@ Vamos criar duas subnets na AZ a, uma pública e outra privada.
 - Selecione o NATGW01
 - Click em Save changes
 
-![Rota NAT](AprendendoAWS/videos/RotaPadraoNAT.mp4)
+![Rota NAT](videos/RotaPadraoNAT.mp4)
 
-***3.4.4. Associando a route table a subnet privada***
+***3.5.4. Associando a route table a subnet privada***
 
 - Estando em VPC
 - Vá em Rote Tables
@@ -707,31 +707,31 @@ Vamos criar duas subnets na AZ a, uma pública e outra privada.
 - Marque PrivateSubnetA
 - Click em Save associations
 
-![Associate Subnet Private](AprendendoAWS/videos/PublicSubnetAssociation.mp4)
+![Associate Subnet Private](videos/PublicSubnetAssociation.mp4)
 
-#### *4\. Criando uma VM usando EC2*
+#### *4. Criando uma VM usando EC2*
 
 
 
-#### ***5\. Conectando o ambiente on premises com a cloud***
+#### ***5. Conectando o ambiente on premises com a cloud***
 
 
 
 
 Nessa etapa vamos criar uma VPN Ipsec entre a Digital Ocean e a AWS para simular a conexão entre o ambiente on premises com a cloud.
 
-#### ***6\. Migrando servidores para AWS***
+#### ***6. Migrando servidores para AWS***
 
 AWS Application migration service.
 
-#### 7\. Migrando servidor de arquivos para S3.
+#### 7. Migrando servidor de arquivos para S3.
 
-#### 8\. Migrando Banco de Dados para Amazon RDS
+#### 8. Migrando Banco de Dados para Amazon RDS
 
-#### 9.\ Implementando Backups
+#### 9. Implementando Backups
 
 #### 10.\ Implementando Monitoramento CloudWatch
 
-#### *11.\ Redirecionando os serviços para aws usando Route 53*
+#### *11. Redirecionando os serviços para aws usando Route 53*
 
 
