@@ -4,6 +4,7 @@ date: '"2024-03-03T13:39:33.756Z"'
 author: Cristiano Lemes
 coverImage: '"https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fuczlklfhkyf9irwr5tnd.jpg"'
 ---
+
 ### Introdução
 
 O Kubernetes emergiu como a principal plataforma de orquestração de containers, permitindo que organizações gerenciem e dimensionem aplicativos de maneira eficiente em ambientes de produção e desenvolvimento. Com sua arquitetura distribuída e recursos de automação robustos, o Kubernetes simplifica a implantação, o gerenciamento e a escalabilidade de aplicativos em containers.
