@@ -22,11 +22,11 @@ toc: hextra-home
   {{< icon name="arrow-circle-right" attributes="height=14" >}}
 {{< /hextra/hero-badge >}}
 
-<div class="hx-mt-6 hx-mb-6">
+<!-- <div class="hx-mt-6 hx-mb-6">
 {{< hextra/hero-headline >}}
   Blog e Documentações&nbsp;<br class="sm:hx-block hx-hidden" />abertas para comunidade
 {{< /hextra/hero-headline >}}
-</div>
+</div> -->
 
 <!-- <div class="hx-mb-12">
 {{< hextra/hero-subtitle >}}
