@@ -106,4 +106,14 @@ params:
       index: content
       # full | forward | reverse | strict 
       # https://github.com/nextapps-de/flexsearch/#tokenizer-prefix-search
-      tokenize: forward    
+      tokenize: forward
+
+  comments:
+    enable: false
+    type: giscus
+
+    giscus:
+      repo: "cslemes/blog-documentations"
+      repoId: "R_kgDOLgc4IQ"
+      category: "General"
+      categoryId: "DIC_kwDOLgc4Ic4CeocW"
