@@ -201,7 +201,7 @@ Vamos criar duas subnets na AZ a, uma pública e outra privada.
 
 ![Public Route Table](videos/PublicRouteTable.mp4)
 
-***3.4.5. Criando rota padrão na subnet pública
+***3.4.5. Criando rota padrão na subnet pública***
 
 - Estando em VPC
 - Vá em Rote Tables
@@ -288,7 +288,7 @@ Vamos criar duas subnets na AZ a, uma pública e outra privada.
 
 ![Associate Subnet Private](videos/PublicSubnetAssociation.mp4)
 
-#### *4. Criando um Security Group
+#### 4. Criando um Security Group
 
 - Vá até a Página inicial do Aws console
 - Escreva **vpc** na barra de pesquisa
