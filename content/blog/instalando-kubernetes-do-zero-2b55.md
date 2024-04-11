@@ -2,7 +2,7 @@
 title: ' "Instalando Kubernetes do Zero"'
 date: '"2024-03-03T13:39:33.756Z"'
 author: Cristiano Lemes
-coverImage: '"https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fuczlklfhkyf9irwr5tnd.jpg"'
+coverImage: https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fuczlklfhkyf9irwr5tnd.jpg
 ---
 
 ### Introdução

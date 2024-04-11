@@ -2,7 +2,7 @@
 title: Docker GPU no Windows com WSL2
 date: 2024-02-15T23:09:29.755Z
 author: Cristiano Lemes
-coverImage: ' "https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Ftavsh0s5mk3gg933pv5l.png"'
+coverImage: https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Ftavsh0s5mk3gg933pv5l.png
 ---
 ### Configurando Ambiente de Desenvolvimento com GPU no Windows usando Docker e WSL2
 
